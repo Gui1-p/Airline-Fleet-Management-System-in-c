@@ -1,12 +1,42 @@
+
+/*
+```
+-> Retirar ponteiros desnecessários
+-> Locar ponteiros que serão somente para leitura de dados
+-> Implementar Ponteiros onde houver a necessidade ou for melhor
+-> Implementar alocação dinamica de memória
+-> Implementar submenus 
+-> Otimizar código
+-> Melhorar minha identação se possível
+-> Analisar viábilidade de alocar vetor string de forma dinamica
+-> Fazer verificações, não deixar que algo seja cadastrado sem que as informações sejam verificadas
+-> Melhorar a visualização por parte do usuário, colocar função para limpar tela, alinhar informações, etc.
+-> Tornar meu código simples para expansão
+-> Usar a função rand para gerar a identificação da aeronave
+-> Usar touper para deixar todas as strings compatibilizadas
+-> Usar enum para deixar o código mais bonito e de fácil compreensão
+```
+*/
+
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
-#define SIZE_STR_1 7 
-#define SIZE_STR_2 20
+#define SIZE_STR_1          7 
+#define SIZE_STR_2          20
+#define TOTAL_FABRICANTES   5
 
-const char situacao_Nave[2][12] = {"Operação", "Manutenção"};
-const char fabricantes_Nave[5][8] = {"Embraer", "Boeing", "Airbus", "Comac", "Outro"};
+const char situacao_Nave[2][12] = {"Manutenção", "Operação"};
+const char fabricantes_Nave[TOTAL_FABRICANTES][8] = {"Embraer", "Boeing", "Airbus", "Comac", "Outro"};
 const char tipo_Nave[2][12] = {"Carga", "Transporte"};
+
+enum {
+    Embraer =   0;
+    Boeing =    1;
+    Airbus =    2;
+    Comac =     3;
+    Outro =     4;
+}
 
 typedef struct aeronave{
     int Identificacao;
@@ -19,30 +49,32 @@ typedef struct aeronave{
     int Situacao;
     int Tripulacao_necessaria;
     int Qtd_manutencao;
+    struct aeronave *Proximo;
 } aeronave_t;
 
-typedef char string_20_t[SIZE_STR_2];
+typedef char string_20[SIZE_STR_2];
 
 typedef struct rotas{
     int Codigo;
     int Data[3];
     int Hora[3];
-    char Local_partida[SIZE_STR_2];
-    char Local_destino[SIZE_STR_2];
+    string_20 Local_partida;
+    string_20 Local_destino;
     int Tempo_estimado_voo[3];
     float Combustivel_necessario;
     int Quantidade_passageiros;
     float Quantidade_carga;
-    string_20_t Membros_tripulacao[SIZE_STR_2];
+    string_20 Membros_tripulacao[SIZE_STR_2];
     int Aeronave_alocada;
     int Total_membros;
+    struct rotas *Proximo;
 } rotas_t;
 
 
 int menu(void);
-aeronave_t menu_cadastro_aeronave(void);
+aeronave_t cadastro_aeronave(void);
 rotas_t menu_cadastro_rota(void);
-void informacao_aeronave(aeronave_t *aeronave);
+void informacao_aeronave(const aeronave_t * const aeronave);
 void leitura_string(char *ptr, int tamanho_vetor);
 void perfumaria_linha(void);
 int busca_nave_prefixo(aeronave_t *aeronave, char *matricula_buscada);//modificar para usar o total de naves cadastradas
@@ -53,7 +85,7 @@ int escolha_tipo(void);
 void listagem_aeronave_modelo(aeronave_t *nave, int naves_cadast, char *modelo);
 void listagem_aeronave_ano(aeronave_t *nave, int naves_cadast, int ano);
 void listagem_aeronave_situacao(aeronave_t *nave, int naves_cadast, int situacao);
-void informacao_rota(rotas_t *rota);
+void informacao_rota(const rotas_t * const rota);
 void listagem_rota_data(rotas_t *rota, int rotas_cadast, int *data);
 void listagem_rota_destino(rotas_t *rota, int rotas_cadast, char *destino);
 void listagem_rota_origem(rotas_t *rota, int rotas_cadast, char *origem);
@@ -66,6 +98,23 @@ void quantidade_manutencoes_nave(aeronave_t *nave, int codigo, int naves_cadast)
 void alterar_situacao_nave(aeronave_t *nave, int codigo, int naves_cadast);
 void cadastro_membros_tripulacao(rotas_t *rota);
 void mostrar_membros_tripulacao(rotas_t *rota);
+void retirar_enter(char *ptr);
+void formatar_maiusculo(char *ptr);
+int sub_menu_aeronave(void);
+int sub_menu_rota(void);
+void gerenciamento_aeronaves(/*-*/);
+void gerenciamento_rotas(/*-----*/);
+void sub_menu_saida(/*----------*/);
+void carregar_arquivos(/*-------*/);
+void salvar_arquivos(/*---------*/);
+void inserir_lista_fim_nave(aeronave_t **Primeiro, aeronave_t *novo_elemento);
+aeronave_t *localizar_fim_da_lista(aeronave_t *Primeiro);
+void inserir_lista_fim_rota(rotas_t **Primeiro, rotas_t *novo_elemento);
+rotas_t *localizar_fim_da_lista(rotas_t *Primeiro);
+void apagar_item_lista(/*-------*/);
+void encontrar_anterior(/*------*/);
+void mostrar_fabricantes(void);
+void gerar_identificacao_nave(void);
 
 
 int main ()
@@ -77,106 +126,14 @@ int main ()
 
 
     do{
-        int posicao_nave, maker, select_ano, select_tipo, select_situacao, select_data[3], select_data_2[3], select_codigo;
-        char select_modelo[SIZE_STR_1], aeronave_procurada_matricula[SIZE_STR_1], select_destino[SIZE_STR_2], select_origem[SIZE_STR_2];
+        int aux, select_data[3], select_data_2[3];
+        char str_aux[SIZE_STR_1], str_aux_2[SIZE_STR_2];
         opcao =  menu();
         switch (opcao) {    
-            case 1: frota_aeronave[naves_cadastradas] = menu_cadastro_aeronave();
-                    naves_cadastradas++;
-                    break;
 
-            case 2: lista_rotas[rotas_cadastradas] = menu_cadastro_rota();
-                    rotas_cadastradas++;
-                    break;
-            case 3: for(int i = 0; i < naves_cadastradas; i++){
-                        informacao_aeronave(&frota_aeronave[i]);
-                        perfumaria_linha();
-                    }
-                    break;
-
-            case 4: printf("Digite a matricula/prefixo da aeronave procurada.\n");
-                    leitura_string(aeronave_procurada_matricula, SIZE_STR_1);
-                    posicao_nave = busca_nave_prefixo(frota_aeronave, aeronave_procurada_matricula);
-                    if(posicao_nave >= 0) {
-                        informacao_aeronave(&frota_aeronave[posicao_nave]);
-                    }
-                    else{
-                        printf("Esta aeronave não está cadastrada.\n");
-                    }
-                    break;
-
-            case 5: maker = escolha_fabricante();
-                    listagem_aeronave_fabricante(frota_aeronave, naves_cadastradas, maker);
-                    break;
-            case 6: select_tipo = escolha_tipo();
-                    listagem_aeronave_tipo(frota_aeronave, naves_cadastradas, select_tipo);
-                    break;
-            case 7: printf("Digite o modelo das aeronaves procuradas:\n");
-                    leitura_string(select_modelo, SIZE_STR_1);
-                    listagem_aeronave_modelo(frota_aeronave, naves_cadastradas, select_modelo);
-                    break;
-            case 8: printf("Digite o ano que a aeronave que você busca foi fabricada: ");
-                    scanf("%i", &select_ano);
-                    getchar();
-                    listagem_aeronave_ano(frota_aeronave, naves_cadastradas, select_ano);
-                    break;
-            case 9: printf("Digite a situação das aeronaves que está buscando:\n");
-                    printf("0. Manutenção\n");
-                    printf("1. Operação\n");
-                    scanf("%i", &select_situacao);
-                    getchar();
-                    listagem_aeronave_situacao(frota_aeronave, naves_cadastradas, select_situacao);
-                    break;
-            case 10:printf("Digite a data da rota que você busca (dd/mm/aaaa): \n");
-                    scanf("%i/%i/%i", &select_data[0], &select_data[1], &select_data[2]);
-                    getchar();
-                    listagem_rota_data(lista_rotas, rotas_cadastradas, select_data);
-                    break;
-            case 11:printf("Digite o local de destino das rotas que você busca:\n");
-                    leitura_string(select_destino, SIZE_STR_2);
-                    listagem_rota_destino(lista_rotas, rotas_cadastradas, select_destino);
-                    break;
-            case 12:printf("Digite o local de partida das rotas que você busca:\n");
-                    leitura_string(select_origem, SIZE_STR_2);
-                    listagem_rota_origem(lista_rotas, rotas_cadastradas, select_origem);
-                    break;
-            case 13:printf("Digite o destino que deseja saber o percentual de voos:\n");
-                    leitura_string(select_destino, SIZE_STR_2);
-                    printf("Digite a data de inicio (dd/mm/aaaa): ");
-                    scanf("%i/%i/%i", &select_data[0], &select_data[1], &select_data[2]);
-                    getchar();
-                    printf("Digite a data de termino do periodo (dd/mm/aaaa):");
-                    scanf("%i/%i/%i", &select_data_2[0], &select_data_2[1], &select_data_2[2]);
-                    getchar();
-                    percentual_voo_destino_intervalo_data(lista_rotas, rotas_cadastradas, select_destino, select_data, select_data_2);
-                    break;
-            case 14:percentual_voo_aeronave(lista_rotas, rotas_cadastradas);
-                    perfumaria_linha();
-                    break;
-            case 15:printf("Digite a data de inicio (dd/mm/aaaa): ");
-                    scanf("%i/%i/%i", &select_data[0], &select_data[1], &select_data[2]);
-                    getchar();
-                    printf("Digite a data de termino do periodo (dd/mm/aaaa):");
-                    scanf("%i/%i/%i", &select_data_2[0], &select_data_2[1], &select_data_2[2]);
-                    getchar();
-                    total_combustivel_intervalo_data(lista_rotas, rotas_cadastradas, select_data, select_data_2);
-                    break;
-            case 16:rota_mais_passageiros(lista_rotas, rotas_cadastradas);
-                    perfumaria_linha();
-                    break;
-            case 17:rota_menos_passageiros(lista_rotas, rotas_cadastradas);
-                    perfumaria_linha();
-                    break;
-            case 18:printf("Digite o código da nave que deseja mudar a situação: ");
-                    scanf("%i", &select_codigo);
-                    getchar();
-                    alterar_situacao_nave(frota_aeronave, select_codigo, naves_cadastradas);
-                    break;
-            case 19:printf("Digite o código da nave que deseja ver a quantidade de manutenções:\n");
-                    scanf("%i", &select_codigo);
-                    getchar();
-                    quantidade_manutencoes_nave(frota_aeronave, select_codigo, naves_cadastradas);
-                    break;
+            
+            
+            
             case 0: printf("Tenha um bom dia.\n");
                     break;
 
@@ -189,70 +146,231 @@ int main ()
 int menu()
 {
     int opcao;
-
-    printf("1.Cadastro de aeronaves; \n");
-    printf("2.Cadastro de rotas; \n");
-    printf("3.Relatório de aeronaves; \n");
-    printf("4.Busca de aeronave por prefixo; \n");
-    printf("5.Listar aeronaves por fabricante; \n");
-    printf("6.Listar aeronaves por tipo (carga ou passageiro); \n");
-    printf("7.Listar aeronaves por modelo; \n");
-    printf("8.Listar aeronaves por ano de fabricação; \n");
-    printf("9.Listar aeronaves por situação (em operação ou em manutenção); \n");
-    printf("10.Consultar rota por data; \n");
-    printf("11.Listar rotas por destino; \n");
-    printf("12.Listar rotas por origem; \n");
-    printf("13.Percentual de voos realizados para um determinado destino em um intervalo de datas; \n");
-    printf("14.Percentual de voos realizados por aeronave; \n");
-    printf("15.Consumo de combustível total em um intervalo de datas; \n");
-    printf("16.Listar rotas com maior número de passageiros; \n");
-    printf("17.Listar rotas com menor número de passageiros; \n");
-    printf("18.Alterar Situação da aeronave;\n");
-    printf("19.Quantidade de vezes que uma determinada aeronave entrou em manutenção; \n");
+    printf("1.Menu - Aeronaves;\n");
+    printf("2.Menu - Rotas;\n");
     printf("0.Sair do programa;\n");
     scanf("%i", &opcao);
     getchar();
-    if(opcao > 19 || opcao < 0){
-        printf("Esta opção não é válida!\n");
+    if(opcao > 2 || opcao < 0){
+        printf("Esta opcao nao eh valida!\n");
+        return;
     }
     else{
-        return opcao;
+        
     }
 }
 
-aeronave_t menu_cadastro_aeronave(void)
+int sub_menu_aeronave()
 {
-    aeronave_t aeronave;
+    int opcao; 
+
+    printf("1.Cadastro de aeronaves; \n");
+    printf("2.Relatório de aeronaves; \n");
+    printf("3.Busca de aeronave por prefixo; \n");
+    printf("4.Listar aeronaves por fabricante; \n");
+    printf("5.Listar aeronaves por tipo (carga ou passageiro); \n");
+    printf("6.Listar aeronaves por modelo; \n");
+    printf("7.Listar aeronaves por ano de fabricação; \n");
+    printf("8.Listar aeronaves por situação (em operação ou em manutenção); \n");
+    printf("9.Alterar Situação da aeronave;\n");
+    printf("10.Quantidade de vezes que uma determinada aeronave entrou em manutenção; \n");
+    printf("0.Voltar;\n");
+    scanf("%i", &opcao);
+    getchar();
+    
+    if(opcao > 10 || opcao < 0){
+        printf("Esta opcao nao eh valida!\n");
+        return;
+    }
+    return opcao; 
+}
+
+void gerenciamento_aeronaves(/*-*/)
+{
+    int aux;
+    char str_aux[SIZE_STR_1];
+
+     switch (opcao) {    
+            case 1: frota_aeronave[naves_cadastradas] = cadastro_aeronave();
+                    naves_cadastradas++;
+                    break;
+
+            case 2: for(int i = 0; i < naves_cadastradas; i++){
+                        informacao_aeronave(&frota_aeronave[i]);
+                        perfumaria_linha();
+                    }
+                    break;
+
+            case 3: printf("Digite a matricula/prefixo da aeronave procurada.\n");
+                    leitura_string(str_aux, SIZE_STR_1);
+                    aux = busca_nave_prefixo(frota_aeronave, str_aux);
+                    if(aux >= 0) {
+                        informacao_aeronave(&frota_aeronave[aux]);
+                    }
+                    else{
+                        printf("Esta aeronave não está cadastrada.\n");
+                    }
+                    break;
+
+            case 4: aux = escolha_fabricante();
+                    listagem_aeronave_fabricante(frota_aeronave, naves_cadastradas, aux);
+                    break;
+
+            case 5: aux = escolha_tipo();
+                    listagem_aeronave_tipo(frota_aeronave, naves_cadastradas, aux);
+                    break;
+
+            case 6: printf("Digite o modelo das aeronaves procuradas:\n");
+                    leitura_string(str_aux, SIZE_STR_1);
+                    listagem_aeronave_modelo(frota_aeronave, naves_cadastradas, str_aux);
+                    break;
+
+            case 7: printf("Digite o ano que a aeronave que você busca foi fabricada: ");
+                    scanf("%i", &aux);
+                    getchar();
+                    listagem_aeronave_ano(frota_aeronave, naves_cadastradas, aux);
+                    break;
+
+            case 8: printf("Digite a situação das aeronaves que está buscando:\n");
+                    printf("0. Manutenção\n");
+                    printf("1. Operação\n");
+                    scanf("%i", &aux);
+                    getchar();
+                    listagem_aeronave_situacao(frota_aeronave, naves_cadastradas, aux);
+                    break;
+            
+            case 9: printf("Digite o código da nave que deseja mudar a situação: ");
+                    scanf("%i", &aux);
+                    getchar();
+                    alterar_situacao_nave(frota_aeronave, naves_cadastradas);
+                    break;
+
+            case 10:printf("Digite o código da nave que deseja ver a quantidade de manutenções:\n");
+                    scanf("%i", aux);
+                    getchar();
+                    quantidade_manutencoes_nave(frota_aeronave, naves_cadastradas);
+                    break;
+            
+                }
+            
+}
+
+int sub_menu_rota()
+{
+    int opcao;
+
+    printf("1.Cadastro de rotas; \n");
+    printf("2.Consultar rota por data; \n");
+    printf("3.Listar rotas por destino; \n");
+    printf("4.Listar rotas por origem; \n");
+    printf("5.Percentual de voos realizados para um determinado destino em um intervalo de datas; \n");
+    printf("6.Percentual de voos realizados por aeronave; \n");
+    printf("7.Consumo de combustível total em um intervalo de datas; \n");
+    printf("8.Listar rotas com maior número de passageiros; \n");
+    printf("9.Listar rotas com menor número de passageiros; \n");
+    printf("0.Voltar;\n");
+    scanf("%i", &opcao);
+    getchar();
+    
+    if(opcao > 9 || opcao < 0){
+        printf("Esta opcao nao eh valida!\n");
+        return;
+    }
+    return opcao;
+    
+}
+
+void gerenciamento_rotas(/*-----*/)
+{
+    int select_data[3], select_data_2[3];
+    string_20 str_aux_2;
+
+    switch (opcao) {
+        case 1: lista_rotas[rotas_cadastradas] = menu_cadastro_rota();
+                rotas_cadastradas++;
+                break;
+
+        case 2: printf("Digite a data da rota que você busca (dd/mm/aaaa): \n");
+                scanf("%i/%i/%i", &select_data[0], &select_data[1], &select_data[2]);
+                getchar();
+                listagem_rota_data(lista_rotas, rotas_cadastradas, select_data);
+                break;
+
+        case 3: printf("Digite o local de destino das rotas que você busca:\n");
+                leitura_string(str_aux_2, SIZE_STR_2);
+                listagem_rota_destino(lista_rotas, rotas_cadastradas, str_aux_2);
+                break;
+
+        case 4: printf("Digite o local de partida das rotas que você busca:\n");
+                 leitura_string(str_aux_2, SIZE_STR_2);
+                 listagem_rota_origem(lista_rotas, rotas_cadastradas, str_aux_2);
+                 break;
+
+        case 5: printf("Digite o destino que deseja saber o percentual de voos:\n");
+                leitura_string(str_aux_2, SIZE_STR_2);
+                printf("Digite a data de inicio (dd/mm/aaaa): ");
+                scanf("%i/%i/%i", &select_data[0], &select_data[1], &select_data[2]);
+                getchar();
+                printf("Digite a data de termino do periodo (dd/mm/aaaa):");
+                scanf("%i/%i/%i", &select_data_2[0], &select_data_2[1], &select_data_2[2]);
+                getchar();
+                percentual_voo_destino_intervalo_data(lista_rotas, rotas_cadastradas, str_aux_2, select_data, select_data_2);
+                break;
+
+        case 6: percentual_voo_aeronave(lista_rotas, rotas_cadastradas);
+                perfumaria_linha();
+                break;
+
+        case 7: printf("Digite a data de inicio (dd/mm/aaaa): ");
+                scanf("%i/%i/%i", &select_data[0], &select_data[1], &select_data[2]);
+                getchar();
+                printf("Digite a data de termino do periodo (dd/mm/aaaa):");
+                scanf("%i/%i/%i", &select_data_2[0], &select_data_2[1], &select_data_2[2]);
+                getchar();
+                total_combustivel_intervalo_data(lista_rotas, rotas_cadastradas, select_data, select_data_2);
+                break;
+
+        case 8: rota_mais_passageiros(lista_rotas, rotas_cadastradas);
+                perfumaria_linha();
+                break;
+
+        case 9: rota_menos_passageiros(lista_rotas, rotas_cadastradas);
+                perfumaria_linha();
+                break;
+    }
+}
+
+aeronave_t *cadastro_aeronave()
+{
+    aeronave_t *aeronave = NULL;
+
+    aeronave = (aeronave_t*)malloc(sizeof(aeronave_t));
 
     printf("Digite a identificacao da aeronave:\n");
-    scanf("%i", &aeronave.Identificacao);
+    scanf("%i", &aeronave->Identificacao);
     getchar();
 
     perfumaria_linha();
 
     printf("Digite o modelo da aeronave:\n");
-    leitura_string(aeronave.Modelo, SIZE_STR_1);
+    leitura_string(aeronave->Modelo, SIZE_STR_1);
 
     perfumaria_linha();
 
     printf("Digite a fabricante da aeronave:\n");
-    printf("0 - Embraer\n");
-    printf("1 - Boeing\n");
-    printf("2 - Airbus\n");
-    printf("3 - Comac\n");
-    printf("4 - Outro\n");
-    scanf("%i", &aeronave.Fabricante);
+    mostrar_fabricantes();
+    scanf("%i", &aeronave->Fabricante);
     getchar();
 
     perfumaria_linha();
 
     printf("Digite a matrícula da aeronave:\n");
-    leitura_string(aeronave.Matricula, SIZE_STR_1);
+    leitura_string(aeronave->Matricula, SIZE_STR_1);
 
     perfumaria_linha();
 
     printf("Digite o ano de fabricacao da aeronave:\n");
-    scanf("%i", &aeronave.Ano_fabricacao);
+    scanf("%i", &aeronave->Ano_fabricacao);
     getchar();
 
     perfumaria_linha();
@@ -260,35 +378,37 @@ aeronave_t menu_cadastro_aeronave(void)
     printf("Digite o tipo da aeronave:\n");
     printf("Digite 0 se ela for para transporte de carga.\n");
     printf("Digite 1 se ela for para transporte de passageiros.\n");
-    scanf("%i", &aeronave.Tipo);
+    scanf("%i", &aeronave->Tipo);
     getchar();
 
     perfumaria_linha();
 
     printf("Digite o número de passageiros que a aeronave transporta:\n");
-    scanf("%i", &aeronave.Numero_passageiros);
+    scanf("%i", &aeronave->Numero_passageiros);
     getchar();
 
     perfumaria_linha();
 
     printf("Digite a situacao da aeronave:\n");
-    printf("Digite 1 se ela estiver em manutencao.\n");
-    printf("Digite 0 se ela estiver em operacao.\n");
-    scanf("%i", &aeronave.Situacao);
+    printf("Digite 0 se ela estiver em manutencao.\n");
+    printf("Digite 1 se ela estiver em operacao.\n");
+    scanf("%i", &aeronave->Situacao);
     getchar();
 
     perfumaria_linha();
 
     printf("Digite a tripulacao necessária para a operar a aeronave:\n");
-    scanf("%i", &aeronave.Tripulacao_necessaria);
+    scanf("%i", &aeronave->Tripulacao_necessaria);
     getchar();
 
-    if (aeronave.Situacao){
-        aeronave.Qtd_manutencao = 1;
+    if (!aeronave.Situacao){
+        aeronave->Qtd_manutencao = 1;
     }
     else{
-        aeronave.Qtd_manutencao = 0;
+        aeronave->Qtd_manutencao = 0;
     }
+
+    aeronave->Proximo = NULL;
 
     return aeronave;
 }
@@ -297,83 +417,100 @@ rotas_t menu_cadastro_rota(void)
 {
     rotas_t rota;
 
-    printf("Digite o código da rota.\n");
+    printf("Digite o código da rota......................:");
     scanf("%i", &rota.Codigo);
     getchar();
 
-    printf("Digite a data e hora.\n");
-    printf("Data (dd/mm/aaaa): ");
+    printf("Data de partida(dd/mm/aaaa)..................: ");
     scanf("%i/%i/%i", &rota.Data[0], &rota.Data[1], &rota.Data[2]);
     getchar();
-    printf("Hora (hh:mm:ss): ");
+    printf("Hora de partida(hh:mm:ss)....................: ");
     scanf("%i:%i:%i", &rota.Hora[0], &rota.Hora[1], &rota.Hora[2]);
     getchar();
 
-    printf("Digite o local de partida (origem).\n");
+    printf("Digite o local de partida (origem)...........: ");
     leitura_string(rota.Local_partida, SIZE_STR_2);
 
-    printf("Digite o local de destino (destino).\n");
+    printf("Digite o local de destino (destino)..........: ");
     leitura_string(rota.Local_destino, SIZE_STR_2);
 
-    printf("Digite o tempo estimado de voo (hh/mm/ss).\n");
-    scanf("%i/%i/%i", &rota.Tempo_estimado_voo[0], &rota.Tempo_estimado_voo[1], &rota.Tempo_estimado_voo[2]);
+    printf("Digite o tempo estimado de voo (hh:mm:ss)....: ");
+    scanf("%i:%i:%i", &rota.Tempo_estimado_voo[0], &rota.Tempo_estimado_voo[1], &rota.Tempo_estimado_voo[2]);
     getchar();
 
-    printf("Digite o combustível necessário (em litros).\n");
+    printf("Digite o combustível necessário (em litros)..: ");
     scanf("%f", &rota.Combustivel_necessario);
     getchar();
 
-    printf("Digite a quantidade de passageiros.\n");
+    printf("Digite a quantidade de passageiros...........: ");
     scanf("%i", &rota. Quantidade_passageiros);
     getchar();
 
-    printf("Digite a quantidade de carga útil.\n");
+    printf("Digite a quantidade de carga útil............: ");
     scanf("%f", &rota.Quantidade_carga);
     getchar();
 
-    printf("Digite o nome dos membros da tripulação.\n");
+    printf("Digite o nome dos membros da tripulação......: ");
     cadastro_membros_tripulacao(&rota);
 
 
-    printf("Digite a aeronave alocada (código).\n");
+    printf("Digite a aeronave alocada (código)...........: ");
     scanf("%i", &rota.Aeronave_alocada);
     getchar();
 
     return rota;
 }
 
-void informacao_aeronave(aeronave_t *aeronave)
+void informacao_aeronave(const aeronave_t * const aeronave)
 {
-    printf("Identificação: %i\n", aeronave->Identificacao);
+    printf("Identificação..........................: %i\n", aeronave->Identificacao);
     
-    printf("Modelo: %s\n", aeronave->Modelo);
+    printf("Modelo.................................: %s\n", aeronave->Modelo);
 
-    printf("Fabricante: %s\n", fabricantes_Nave[aeronave->Fabricante]);
+    printf("Fabricante.............................: %s\n", fabricantes_Nave[aeronave->Fabricante]);
 
-    printf("Matrícula: %s\n", aeronave->Matricula);
+    printf("Matrícula..............................: %s\n", aeronave->Matricula);
     
-    printf("Ano de fabricação: %i\n", aeronave->Ano_fabricacao);
+    printf("Ano de fabricação......................: %i\n", aeronave->Ano_fabricacao);
     
-    printf("Tipo: %s\n", tipo_Nave[aeronave->Tipo]);
+    printf("Tipo...................................: %s\n", tipo_Nave[aeronave->Tipo]);
     
-    printf("Número de passageiros que transporta: %i\n", aeronave->Numero_passageiros);
+    printf("Número de passageiros que transporta...: %i\n", aeronave->Numero_passageiros);
     
-    printf("Situação: em %s\n", situacao_Nave[aeronave->Situacao]);
+    printf("Situação...............................: em %s\n", situacao_Nave[aeronave->Situacao]);
 
-    printf("Tripulação necessária: %i\n", aeronave->Tripulacao_necessaria);
+    printf("Tripulação necessária..................: %i\n", aeronave->Tripulacao_necessaria);
 }
+
+//Inicio das funções de auxilio
 
 //Função para ler strings, entra com o vetor que será armazenado e o tamanho dele
 void leitura_string(char *ptr, int tamanho_vetor)
 {
     fgets(ptr, tamanho_vetor, stdin);
-    
-    for(int j = 0; j < strlen(ptr); j++){
-        if(ptr[j]  == '\n'){
-            ptr[j] = '\0';
-        }
+    retirar_enter(ptr);
+    formatar_maiusculo(ptr);
+}
+
+void retirar_enter(char *ptr)
+{
+    *(ptr + (strlen(ptr) - 1)) = '\0';
+}
+
+void formatar_maiusculo(char *ptr)
+{
+    int tamanho = strlen(ptr);
+
+    for(int i = 0; i < tamanho; i++){
+        *(ptr + i) = toupper(*(ptr + i));
     }
-    
+}
+
+void mostrar_fabricantes()
+{
+    for(int i = 0; i < TOTAL_FABRICANTES; i++){
+        printf("i. %s\n", fabricantes_Nave[i]);
+    }
 }
 
 void perfumaria_linha(void)
@@ -383,6 +520,13 @@ void perfumaria_linha(void)
     }
     printf("\n");
 }
+
+int gerar_identificacao_nave()
+{
+    
+}
+
+//Fim das funções de auxilio
 
 //busca a aeronave no banco de dados pela matricula e devolve a posição da nave, se ela estiver registrada
 int busca_nave_prefixo(aeronave_t *aeronave, char *matricula_buscada)
@@ -401,17 +545,16 @@ int escolha_fabricante(void)
 {
     int opcao;
 
+//adaptar esta função com um for, tornala masi automática
+
     printf("Digite o número correspondente ao fabricante da aeronave que procura:\n");
-    printf("0. %s\n", fabricantes_Nave[0]);
-    printf("1. %s\n", fabricantes_Nave[1]);
-    printf("2. %s\n", fabricantes_Nave[2]);
-    printf("3. %s\n", fabricantes_Nave[3]);
-    printf("4. %s\n", fabricantes_Nave[4]);
+    mostrar_fabricantes();
     scanf("%i", &opcao);
     getchar();
 
     return opcao;
 }
+
 
 //recebe a posição 0 da frota de naves e busca nos dados cadastrados naves com o fabricante desejado e mostra
 void listagem_aeronave_fabricante(aeronave_t *nave, int naves_cadast, int fabricante)
@@ -427,6 +570,8 @@ void listagem_aeronave_fabricante(aeronave_t *nave, int naves_cadast, int fabric
 int escolha_tipo(void)
 {
     int opcao;
+
+//adaptar com um for para tornala automatica e escalavel
 
     printf("Digite o número correspondente ao fabricante da aeronave que procura:\n");
     printf("0. %s\n", tipo_Nave[0]);
@@ -479,29 +624,28 @@ void listagem_aeronave_situacao(aeronave_t *nave, int naves_cadast, int situacao
 
 //Funções de rota
 
-void informacao_rota(rotas_t *rota)
+void informacao_rota(const rotas_t *const rota)
 {
-    printf("Código da rota: %i\n", rota->Codigo);
+    printf("Código da rota.......................: %i\n", rota->Codigo);
 
-    printf("Data e hora.\n");
-    printf("Data: %i/%i/%i\n", rota->Data[0], rota->Data[1], rota->Data[2]);
-    printf("Hora: %i:%i:%i\n", rota->Hora[0], rota->Hora[1], rota->Hora[2]);
+    printf("Data.................................: %i/%i/%i\n", rota->Data[0], rota->Data[1], rota->Data[2]);
+    printf("Hora.................................: %i:%i:%i\n", rota->Hora[0], rota->Hora[1], rota->Hora[2]);
 
-    printf("Local de partida (origem): %s\n", rota->Local_partida);
+    printf("Local de partida (origem)............: %s\n", rota->Local_partida);
 
-    printf("Local de destino (destino): %s\n", rota->Local_destino);
+    printf("Local de destino (destino)...........: %s\n", rota->Local_destino);
 
-    printf("Tempo estimado de voo: %i:%i:%i\n", rota->Tempo_estimado_voo[0], rota->Tempo_estimado_voo[1], rota->Tempo_estimado_voo[2]);
+    printf("Tempo estimado de voo................: %i:%i:%i\n", rota->Tempo_estimado_voo[0], rota->Tempo_estimado_voo[1], rota->Tempo_estimado_voo[2]);
 
-    printf("Combustível necessário (em litros): %.2f\n", rota->Combustivel_necessario);
+    printf("Combustível necessário (em litros)...: %.2f\n", rota->Combustivel_necessario);
 
-    printf("Quantidade de passageiros: %i\n", rota->Quantidade_passageiros);
+    printf("Quantidade de passageiros............: %i\n", rota->Quantidade_passageiros);
 
-    printf("Quantidade de carga útil: %.2f\n", rota->Quantidade_carga);
+    printf("Quantidade de carga útil.............: %.2f\n", rota->Quantidade_carga);
 
     mostrar_membros_tripulacao(rota);
 
-    printf("Aeronave alocada (código): %i\n", rota->Aeronave_alocada);
+    printf("Aeronave alocada (código)............: %i\n", rota->Aeronave_alocada);
 }
 
 void listagem_rota_data(rotas_t *rota, int rotas_cadast, int *data)
@@ -553,12 +697,6 @@ void percentual_voo_destino_intervalo_data(rotas_t *rota, int rotas_cadast, char
             if(data_analisada >= data_inicio_soma && data_analisada <= data_fim_soma ){
                     contador_rota_destino_intervalo++;
                 }
-
-            // for(int j = data_inicio_soma; j <= data_fim_soma; j++){
-            //     if(((rota[i].Data[0]) + (rota[i].Data[1] * 100) + (rota[i].Data[2] * 10000)) == j ){
-            //         contador_rota_destino_intervalo++;
-            //     }
-            // }
         }
     }
 
@@ -707,4 +845,45 @@ void mostrar_membros_tripulacao(rotas_t *rota)
     for(int i = 0; i < rota->Total_membros; i++){
         printf("->%s\n", rota->Membros_tripulacao[i]);
     }
+}
+
+void inserir_lista_fim_nave(aeronave_t **Primeiro, aeronave_t *novo_elemento)
+{
+    aeronave_t *ultimo = NULL;
+    
+    if (*Primeiro == NULL){
+        *Primeiro = novo_elemento;
+    }
+    else{
+        ultimo = localizar_fim_da_lista(*Primeiro);
+        ultimo->Proximo = novo_elemento;
+    }
+
+}
+
+aeronave_t *localizar_fim_da_lista(aeronave_t *Primeiro)
+{
+    for(Primeiro; Primeiro->Proximo != NULL; Primeiro = Primeiro->Proximo);
+
+    return Primeiro;
+}
+
+void inserir_lista_fim_rota(rotas_t **Primeiro, rotas_t *novo_elemento)
+{
+    rotas_t *ultimo = NULL;
+    
+    if (*Primeiro == NULL){
+        *Primeiro = novo_elemento;
+    }
+    else{
+        ultimo = localizar_fim_da_lista(*Primeiro);
+        ultimo->Proximo = novo_elemento;
+    }
+}
+
+rotas_t *localizar_fim_da_lista(rotas_t *Primeiro)
+{
+    for(Primeiro; Primeiro->Proximo != NULL; Primeiro = Primeiro->Proximo);
+
+    return Primeiro;
 }

@@ -108,33 +108,37 @@ void sub_menu_saida(/*----------*/);
 void carregar_arquivos(/*-------*/);
 void salvar_arquivos(/*---------*/);
 void inserir_lista_fim_nave(aeronave_t **Primeiro, aeronave_t *novo_elemento);
-aeronave_t *localizar_fim_da_lista(aeronave_t *Primeiro);
+aeronave_t *localizar_fim_da_lista_nave(aeronave_t *Primeiro);
 void inserir_lista_fim_rota(rotas_t **Primeiro, rotas_t *novo_elemento);
-rotas_t *localizar_fim_da_lista(rotas_t *Primeiro);
+rotas_t *localizar_fim_da_lista_rota(rotas_t *Primeiro);
 void apagar_item_lista(/*-------*/);
 void encontrar_anterior(/*------*/);
 void mostrar_fabricantes(void);
 void gerar_identificacao_nave(void);
+scanf_melhorado_simples(char tipo, void *destino);
 
 
 int main ()
 {
-    int naves_cadastradas = 0, rotas_cadastradas = 0, opcao;
+    int opcao;
+    unsigned int ultimo_id_nave, ultimo_id_rota;
 
-    aeronave_t frota_aeronave[100];
-    rotas_t lista_rotas[100];
+    aeronave_t *Frota_aeronave = NULL;
+    rotas_t *Lista_rotas = NULL;
 
 
     do{
-        int aux, select_data[3], select_data_2[3];
-        char str_aux[SIZE_STR_1], str_aux_2[SIZE_STR_2];
         opcao =  menu();
         switch (opcao) {    
 
-            
-            
-            
-            case 0: printf("Tenha um bom dia.\n");
+            case 1: gerenciamento_aeronaves(sub_menu_aeronave());
+                    break;
+
+            case 2: gerenciamento_rotas(sub_menu_rota());
+                    break;
+
+            case 0: sub_menu_saida();
+                    printf("Tenha um bom dia.\n");
                     break;
 
         }
@@ -149,8 +153,7 @@ int menu()
     printf("1.Menu - Aeronaves;\n");
     printf("2.Menu - Rotas;\n");
     printf("0.Sair do programa;\n");
-    scanf("%i", &opcao);
-    getchar();
+    scanf_melhorado_simples('i', &opcao);  
     if(opcao > 2 || opcao < 0){
         printf("Esta opcao nao eh valida!\n");
         return;
@@ -175,8 +178,7 @@ int sub_menu_aeronave()
     printf("9.Alterar Situação da aeronave;\n");
     printf("10.Quantidade de vezes que uma determinada aeronave entrou em manutenção; \n");
     printf("0.Voltar;\n");
-    scanf("%i", &opcao);
-    getchar();
+    scanf_melhorado_simples('i', &opcao);  
     
     if(opcao > 10 || opcao < 0){
         printf("Esta opcao nao eh valida!\n");
@@ -187,7 +189,7 @@ int sub_menu_aeronave()
 
 void gerenciamento_aeronaves(/*-*/)
 {
-    int aux;
+    int aux, opcao;
     char str_aux[SIZE_STR_1];
 
      switch (opcao) {    
@@ -226,28 +228,24 @@ void gerenciamento_aeronaves(/*-*/)
                     break;
 
             case 7: printf("Digite o ano que a aeronave que você busca foi fabricada: ");
-                    scanf("%i", &aux);
-                    getchar();
+                    scanf_melhorado_simples('i', &aux);  
                     listagem_aeronave_ano(frota_aeronave, naves_cadastradas, aux);
                     break;
 
             case 8: printf("Digite a situação das aeronaves que está buscando:\n");
                     printf("0. Manutenção\n");
                     printf("1. Operação\n");
-                    scanf("%i", &aux);
-                    getchar();
+                    scanf_melhorado_simples('i', &aux);  
                     listagem_aeronave_situacao(frota_aeronave, naves_cadastradas, aux);
                     break;
             
             case 9: printf("Digite o código da nave que deseja mudar a situação: ");
-                    scanf("%i", &aux);
-                    getchar();
+                    scanf_melhorado_simples('i', &aux);  
                     alterar_situacao_nave(frota_aeronave, naves_cadastradas);
                     break;
 
             case 10:printf("Digite o código da nave que deseja ver a quantidade de manutenções:\n");
-                    scanf("%i", aux);
-                    getchar();
+                    scanf_melhorado_simples('i', &aux);        
                     quantidade_manutencoes_nave(frota_aeronave, naves_cadastradas);
                     break;
             
@@ -269,8 +267,7 @@ int sub_menu_rota()
     printf("8.Listar rotas com maior número de passageiros; \n");
     printf("9.Listar rotas com menor número de passageiros; \n");
     printf("0.Voltar;\n");
-    scanf("%i", &opcao);
-    getchar();
+    scanf_melhorado_simples('i', &opcao);
     
     if(opcao > 9 || opcao < 0){
         printf("Esta opcao nao eh valida!\n");
@@ -282,7 +279,7 @@ int sub_menu_rota()
 
 void gerenciamento_rotas(/*-----*/)
 {
-    int select_data[3], select_data_2[3];
+    int select_data[3], select_data_2[3], opcao;
     string_20 str_aux_2;
 
     switch (opcao) {
@@ -347,8 +344,7 @@ aeronave_t *cadastro_aeronave()
     aeronave = (aeronave_t*)malloc(sizeof(aeronave_t));
 
     printf("Digite a identificacao da aeronave:\n");
-    scanf("%i", &aeronave->Identificacao);
-    getchar();
+    scanf_melhorado_simples('i', &aeronave->Identificacao);
 
     perfumaria_linha();
 
@@ -359,8 +355,7 @@ aeronave_t *cadastro_aeronave()
 
     printf("Digite a fabricante da aeronave:\n");
     mostrar_fabricantes();
-    scanf("%i", &aeronave->Fabricante);
-    getchar();
+    scanf_melhorado_simples('i', &aeronave->Fabricante);  
 
     perfumaria_linha();
 
@@ -370,36 +365,31 @@ aeronave_t *cadastro_aeronave()
     perfumaria_linha();
 
     printf("Digite o ano de fabricacao da aeronave:\n");
-    scanf("%i", &aeronave->Ano_fabricacao);
-    getchar();
+    scanf_melhorado_simples('i', &aeronave->Ano_fabricacao);
 
     perfumaria_linha();
 
     printf("Digite o tipo da aeronave:\n");
     printf("Digite 0 se ela for para transporte de carga.\n");
     printf("Digite 1 se ela for para transporte de passageiros.\n");
-    scanf("%i", &aeronave->Tipo);
-    getchar();
+    scanf_melhorado_simples('i', &aeronave->Tipo);
 
     perfumaria_linha();
 
     printf("Digite o número de passageiros que a aeronave transporta:\n");
-    scanf("%i", &aeronave->Numero_passageiros);
-    getchar();
+    scanf_melhorado_simples('i', &aeronave->Numero_passageiros);
 
     perfumaria_linha();
 
     printf("Digite a situacao da aeronave:\n");
     printf("Digite 0 se ela estiver em manutencao.\n");
     printf("Digite 1 se ela estiver em operacao.\n");
-    scanf("%i", &aeronave->Situacao);
-    getchar();
+    scanf_melhorado_simples('i', &aeronave->Situacao);
 
     perfumaria_linha();
 
     printf("Digite a tripulacao necessária para a operar a aeronave:\n");
-    scanf("%i", &aeronave->Tripulacao_necessaria);
-    getchar();
+    scanf_melhorado_simples('i', &aeronave->Tripulacao_necessaria);
 
     if (!aeronave.Situacao){
         aeronave->Qtd_manutencao = 1;
@@ -413,50 +403,52 @@ aeronave_t *cadastro_aeronave()
     return aeronave;
 }
 
-rotas_t menu_cadastro_rota(void)
+rotas_t *menu_cadastro_rota(void)
 {
-    rotas_t rota;
+    rotas_t *rota;
 
+    rota = (rotas_t*)malloc(sizeof(rotas_t));
+
+    //há modificações pendentes na forma com que o codigo é passado
+    //desejo usar um funcao para passar essa informacao
     printf("Digite o código da rota......................:");
-    scanf("%i", &rota.Codigo);
+    scanf("%i", &rota->Codigo);
     getchar();
 
     printf("Data de partida(dd/mm/aaaa)..................: ");
-    scanf("%i/%i/%i", &rota.Data[0], &rota.Data[1], &rota.Data[2]);
+    scanf("%i/%i/%i", &rota->Data[0], &rota->Data[1], &rota->Data[2]);
     getchar();
     printf("Hora de partida(hh:mm:ss)....................: ");
-    scanf("%i:%i:%i", &rota.Hora[0], &rota.Hora[1], &rota.Hora[2]);
+    scanf("%i:%i:%i", &rota->Hora[0], &rota->Hora[1], &rota->Hora[2]);
     getchar();
 
     printf("Digite o local de partida (origem)...........: ");
-    leitura_string(rota.Local_partida, SIZE_STR_2);
+    leitura_string(rota->Local_partida, SIZE_STR_2);
 
     printf("Digite o local de destino (destino)..........: ");
-    leitura_string(rota.Local_destino, SIZE_STR_2);
+    leitura_string(rota->Local_destino, SIZE_STR_2);
 
     printf("Digite o tempo estimado de voo (hh:mm:ss)....: ");
-    scanf("%i:%i:%i", &rota.Tempo_estimado_voo[0], &rota.Tempo_estimado_voo[1], &rota.Tempo_estimado_voo[2]);
+    scanf("%i:%i:%i", &rota->Tempo_estimado_voo[0], &rota->Tempo_estimado_voo[1], &rota->Tempo_estimado_voo[2]);
     getchar();
 
     printf("Digite o combustível necessário (em litros)..: ");
-    scanf("%f", &rota.Combustivel_necessario);
-    getchar();
+    scanf_melhorado_simples('f', &rota->Combustivel_necessario);
 
     printf("Digite a quantidade de passageiros...........: ");
-    scanf("%i", &rota. Quantidade_passageiros);
-    getchar();
+    scanf_melhorado_simples('i', &rota->Quantidade_passageiros);
 
     printf("Digite a quantidade de carga útil............: ");
-    scanf("%f", &rota.Quantidade_carga);
-    getchar();
+    scanf_melhorado_simples('f', &rota->Quantidade_carga);
 
     printf("Digite o nome dos membros da tripulação......: ");
     cadastro_membros_tripulacao(&rota);
 
 
     printf("Digite a aeronave alocada (código)...........: ");
-    scanf("%i", &rota.Aeronave_alocada);
-    getchar();
+    scanf_melhorado_simples('i', &rota->Aeronave_alocada);
+    
+    rota->Proximo = NULL;
 
     return rota;
 }
@@ -549,8 +541,7 @@ int escolha_fabricante(void)
 
     printf("Digite o número correspondente ao fabricante da aeronave que procura:\n");
     mostrar_fabricantes();
-    scanf("%i", &opcao);
-    getchar();
+    scanf_melhorado_simples('i', &opcao);
 
     return opcao;
 }
@@ -576,8 +567,7 @@ int escolha_tipo(void)
     printf("Digite o número correspondente ao fabricante da aeronave que procura:\n");
     printf("0. %s\n", tipo_Nave[0]);
     printf("1. %s\n", tipo_Nave[1]);
-    scanf("%i", &opcao);
-    getchar();
+    scanf_melhorado_simples('i', &opcao);
 
     return opcao;
 }
@@ -799,7 +789,7 @@ void rota_menos_passageiros(rotas_t *rota, int rotas_cadast)
 void quantidade_manutencoes_nave(aeronave_t *nave, int codigo, int naves_cadast)
 {
     for(int i = 0; i < naves_cadast; i++){
-        if(nave[i].Identificacao == codigo){
+        if((nave + i)->Identificacao == codigo){
             printf("O número de vezes que esta aeronave entrou em manutenção é: %i\n", nave[i].Qtd_manutencao);
         }
     }
@@ -808,11 +798,11 @@ void quantidade_manutencoes_nave(aeronave_t *nave, int codigo, int naves_cadast)
 void alterar_situacao_nave(aeronave_t *nave, int codigo, int naves_cadast)
 {
     for(int i = 0; i < naves_cadast; i++){
-        if(nave[i].Identificacao == codigo){
-            printf("1. Manutenção\n");
-            printf("0. Operação\n");
-            scanf("%i", &nave[i].Situacao);
-            getchar();
+        if((nave + i)->Identificacao == codigo){
+            printf("0. Manutenção\n");
+            printf("1. Operação\n");
+            scanf_melhorado_simples('i', &(nave + i)->Situacao);
+
             if(nave[i].Situacao == 1) {
                 nave[i].Qtd_manutencao++;
             }
@@ -833,8 +823,8 @@ void cadastro_membros_tripulacao(rotas_t *rota)
 
         printf("1. Cadastar membro da tripulação.\n");
         printf("0. Parar de cadastrar\n");
-        scanf("%i", &opc);
-        getchar();
+        scanf_melhorado_simples('i', &opc);
+
     } while(opc != 0 && i != 19);
 
 }
@@ -855,13 +845,13 @@ void inserir_lista_fim_nave(aeronave_t **Primeiro, aeronave_t *novo_elemento)
         *Primeiro = novo_elemento;
     }
     else{
-        ultimo = localizar_fim_da_lista(*Primeiro);
+        ultimo = localizar_fim_da_lista_nave(*Primeiro);
         ultimo->Proximo = novo_elemento;
     }
 
 }
 
-aeronave_t *localizar_fim_da_lista(aeronave_t *Primeiro)
+aeronave_t *localizar_fim_da_lista_nave(aeronave_t *Primeiro)
 {
     for(Primeiro; Primeiro->Proximo != NULL; Primeiro = Primeiro->Proximo);
 
@@ -876,14 +866,26 @@ void inserir_lista_fim_rota(rotas_t **Primeiro, rotas_t *novo_elemento)
         *Primeiro = novo_elemento;
     }
     else{
-        ultimo = localizar_fim_da_lista(*Primeiro);
+        ultimo = localizar_fim_da_lista_rota(*Primeiro);
         ultimo->Proximo = novo_elemento;
     }
 }
 
-rotas_t *localizar_fim_da_lista(rotas_t *Primeiro)
+rotas_t *localizar_fim_da_lista_rota(rotas_t *Primeiro)
 {
     for(Primeiro; Primeiro->Proximo != NULL; Primeiro = Primeiro->Proximo);
 
     return Primeiro;
+}
+
+void scanf_melhorado_simples(char tipo, void *destino)
+{
+    switch (tipo){
+        case 'i': scanf("%i", (int*)destino);
+                  getchar();
+                  break;
+        case 'f': scanf("%f", (float*)destino);
+                  getchar();
+                  break;
+    }
 }

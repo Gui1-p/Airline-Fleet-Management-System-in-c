@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
 #define SIZE_STR_1          7 
 #define SIZE_STR_2          20
@@ -53,6 +54,18 @@ typedef struct aeronave{
 } aeronave_t;
 
 typedef char string_20[SIZE_STR_2];
+
+typedef struct data{
+    int Dia;
+    int Mes;
+    int Ano;
+} data_t;
+
+typedef struct hora{
+    int Hora;
+    int Minuto;
+    int Segundo;
+} hora_t;
 
 typedef struct rotas{
     int Codigo;
@@ -102,8 +115,8 @@ void retirar_enter(char *ptr);
 void formatar_maiusculo(char *ptr);
 int sub_menu_aeronave(void);
 int sub_menu_rota(void);
-void gerenciamento_aeronaves(/*-*/);
-void gerenciamento_rotas(/*-----*/);
+void gerenciamento_aeronaves(int opcao, aeronave_t **Frota_naves, int *id_ultimo);
+void gerenciamento_rotas(int opcao, rotas_t **Lista_rotas, int *id_ultimo);
 void sub_menu_saida(/*----------*/);
 void carregar_arquivos(/*-------*/);
 void salvar_arquivos(/*---------*/);
@@ -115,8 +128,9 @@ void apagar_item_lista(/*-------*/);
 void encontrar_anterior(/*------*/);
 void mostrar_fabricantes(void);
 void gerar_identificacao_nave(void);
-scanf_melhorado_simples(char tipo, void *destino);
-
+void scanf_melhorado_simples(char tipo, void *destino);
+void limpar_tela(void);
+void mostar_msg(char *msg);
 
 int main ()
 {
@@ -131,10 +145,10 @@ int main ()
         opcao =  menu();
         switch (opcao) {    
 
-            case 1: gerenciamento_aeronaves(sub_menu_aeronave());
+            case 1: gerenciamento_aeronaves(sub_menu_aeronave(), Frota_aeronave, ultimo_id_nave);
                     break;
 
-            case 2: gerenciamento_rotas(sub_menu_rota());
+            case 2: gerenciamento_rotas(sub_menu_rota(), Lista_rotas, ultimo_id_rota);
                     break;
 
             case 0: sub_menu_saida();
@@ -187,14 +201,13 @@ int sub_menu_aeronave()
     return opcao; 
 }
 
-void gerenciamento_aeronaves(/*-*/)
+void gerenciamento_aeronaves(int opcao, aeronave_t **Frota_naves, int *id_ultimo)
 {
-    int aux, opcao;
+    int aux;
     char str_aux[SIZE_STR_1];
 
      switch (opcao) {    
-            case 1: frota_aeronave[naves_cadastradas] = cadastro_aeronave();
-                    naves_cadastradas++;
+            case 1: inserir_lista_fim_nave(Frota_naves, cadastro_aeronave());
                     break;
 
             case 2: for(int i = 0; i < naves_cadastradas; i++){
@@ -277,9 +290,9 @@ int sub_menu_rota()
     
 }
 
-void gerenciamento_rotas(/*-----*/)
+void gerenciamento_rotas(int opcao, rotas_t **Lista_rotas, int *id_ultimo)
 {
-    int select_data[3], select_data_2[3], opcao;
+    int select_data[3], select_data_2[3];
     string_20 str_aux_2;
 
     switch (opcao) {
@@ -888,4 +901,17 @@ void scanf_melhorado_simples(char tipo, void *destino)
                   getchar();
                   break;
     }
+}
+
+void limpar_tela(void)
+{
+    system("clear");
+}
+
+void mostar_msg(char *msg)
+{
+    perfumaria_linha();
+    printf("%s\n", msg);
+    perfumaria_linha();
+    getchar();
 }

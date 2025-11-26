@@ -27,110 +27,122 @@
 #define SIZE_STR_2          20
 #define TOTAL_FABRICANTES   5
 
-const char situacao_Nave[2][12] = {"Manutenção", "Operação"};
-const char fabricantes_Nave[TOTAL_FABRICANTES][8] = {"Embraer", "Boeing", "Airbus", "Comac", "Outro"};
-const char tipo_Nave[2][12] = {"Carga", "Transporte"};
+// const char situacao_Nave[2][12] = {"Manutenção", "Operação"};
+// const char fabricantes_Nave[TOTAL_FABRICANTES][8] = {"Embraer", "Boeing", "Airbus", "Comac", "Outro"};
+// const char tipo_Nave[2][12] = {"Carga", "Transporte"};
 
-enum {
-    Embraer =   0;
-    Boeing =    1;
-    Airbus =    2;
-    Comac =     3;
-    Outro =     4;
-}
+// typedef enum {
+//     Embraer =   0,
+//     Boeing =    1,
+//     Airbus =    2,
+//     Comac =     3,
+//     Outro =     4
+// } Fabricantes_t;
 
-typedef struct aeronave{
-    int Identificacao;
-    char Modelo[SIZE_STR_1];
-    int Fabricante;
-    char Matricula[SIZE_STR_1];
-    int Ano_fabricacao;
-    int Tipo;
-    int Numero_passageiros;
-    int Situacao;
-    int Tripulacao_necessaria;
-    int Qtd_manutencao;
-    struct aeronave *Proximo;
-} aeronave_t;
+// typedef enum {
+//     MANUTENCAO,
+//     OPERACAO
+// } Situacao_t;
 
-typedef char string_20[SIZE_STR_2];
-
-typedef struct data{
-    int Dia;
-    int Mes;
-    int Ano;
-} data_t;
-
-typedef struct hora{
-    int Hora;
-    int Minuto;
-    int Segundo;
-} hora_t;
-
-typedef struct rotas{
-    int Codigo;
-    int Data[3];
-    int Hora[3];
-    string_20 Local_partida;
-    string_20 Local_destino;
-    int Tempo_estimado_voo[3];
-    float Combustivel_necessario;
-    int Quantidade_passageiros;
-    float Quantidade_carga;
-    string_20 Membros_tripulacao[SIZE_STR_2];
-    int Aeronave_alocada;
-    int Total_membros;
-    struct rotas *Proximo;
-} rotas_t;
+// typedef enum {
+//     CARGA,
+//     TRANSPORTE
+// } Tipo_t;
 
 
-int menu(void);
-aeronave_t cadastro_aeronave(void);
-rotas_t menu_cadastro_rota(void);
-void informacao_aeronave(const aeronave_t * const aeronave);
-void leitura_string(char *ptr, int tamanho_vetor);
-void perfumaria_linha(void);
-int busca_nave_prefixo(aeronave_t *aeronave, char *matricula_buscada);//modificar para usar o total de naves cadastradas
-void listagem_aeronave_fabricante(aeronave_t *nave, int naves_cadast, int fabricante);
-int escolha_fabricante(void);
-void listagem_aeronave_tipo(aeronave_t *nave, int naves_cadast, int tipo);
-int escolha_tipo(void);
-void listagem_aeronave_modelo(aeronave_t *nave, int naves_cadast, char *modelo);
-void listagem_aeronave_ano(aeronave_t *nave, int naves_cadast, int ano);
-void listagem_aeronave_situacao(aeronave_t *nave, int naves_cadast, int situacao);
-void informacao_rota(const rotas_t * const rota);
-void listagem_rota_data(rotas_t *rota, int rotas_cadast, int *data);
-void listagem_rota_destino(rotas_t *rota, int rotas_cadast, char *destino);
-void listagem_rota_origem(rotas_t *rota, int rotas_cadast, char *origem);
-void percentual_voo_destino_intervalo_data(rotas_t *rota, int rotas_cadast, char *destino, int *data_inicio, int *data_fim);
-void percentual_voo_aeronave(rotas_t *rota, int rotas_cadast);
-void total_combustivel_intervalo_data(rotas_t *rota, int rotas_cadast, int *data_inicio, int *data_fim);
-void rota_mais_passageiros(rotas_t *rota, int rotas_cadast);
-void rota_menos_passageiros(rotas_t *rota, int rotas_cadast);
-void quantidade_manutencoes_nave(aeronave_t *nave, int codigo, int naves_cadast);
-void alterar_situacao_nave(aeronave_t *nave, int codigo, int naves_cadast);
-void cadastro_membros_tripulacao(rotas_t *rota);
-void mostrar_membros_tripulacao(rotas_t *rota);
-void retirar_enter(char *ptr);
-void formatar_maiusculo(char *ptr);
-int sub_menu_aeronave(void);
-int sub_menu_rota(void);
-void gerenciamento_aeronaves(int opcao, aeronave_t **Frota_naves, int *id_ultimo);
-void gerenciamento_rotas(int opcao, rotas_t **Lista_rotas, int *id_ultimo);
-void sub_menu_saida(/*----------*/);
+
+// typedef struct aeronave{
+//     int Identificacao;
+//     char Modelo[SIZE_STR_1];
+//     int Fabricante;
+//     char Matricula[SIZE_STR_1];
+//     int Ano_fabricacao;
+//     int Tipo;
+//     int Numero_passageiros;
+//     int Situacao;
+//     int Tripulacao_necessaria;
+//     int Qtd_manutencao;
+//     struct aeronave *Proximo;
+// } aeronave_t;
+
+// typedef char string_20[SIZE_STR_2];
+
+// typedef struct data{
+//     int Dia;
+//     int Mes;
+//     int Ano;
+// } data_t;
+
+// typedef struct hora{
+//     int Hora;
+//     int Minuto;
+//     int Segundo;
+// } hora_t;
+
+// typedef struct rotas{
+//     int Codigo;
+//     int Data[3];
+//     int Hora[3];
+//     string_20 Local_partida;
+//     string_20 Local_destino;
+//     int Tempo_estimado_voo[3];
+//     float Combustivel_necessario;
+//     int Quantidade_passageiros;
+//     float Quantidade_carga;
+//     string_20 Membros_tripulacao[SIZE_STR_2];
+//     int Aeronave_alocada;
+//     int Total_membros;
+//     struct rotas *Proximo;
+// } rotas_t;
+
+
+//int menu(void);
+//aeronave_t cadastro_aeronave(void);
+//rotas_t menu_cadastro_rota(void);
+//void informacao_aeronave(const aeronave_t * const aeronave);
+//void leitura_string(char *ptr, int tamanho_vetor);
+//void perfumaria_linha(void);
+//int busca_nave_prefixo(aeronave_t *aeronave, char *matricula_buscada);//modificar para usar o total de naves cadastradas
+//void listagem_aeronave_fabricante(aeronave_t *nave, int naves_cadast, int fabricante);
+//int escolha_fabricante(void);
+//void listagem_aeronave_tipo(aeronave_t *nave, int naves_cadast, int tipo);
+//int escolha_tipo(void);
+//void listagem_aeronave_modelo(aeronave_t *nave, int naves_cadast, char *modelo);
+//void listagem_aeronave_ano(aeronave_t *nave, int naves_cadast, int ano);
+//void listagem_aeronave_situacao(aeronave_t *nave, int naves_cadast, int situacao);
+// void informacao_rota(const rotas_t * const rota);
+// void listagem_rota_data(rotas_t *rota, int rotas_cadast, int *data);
+// void listagem_rota_destino(rotas_t *rota, int rotas_cadast, char *destino);
+// void listagem_rota_origem(rotas_t *rota, int rotas_cadast, char *origem);
+// void percentual_voo_destino_intervalo_data(rotas_t *rota, int rotas_cadast, char *destino, int *data_inicio, int *data_fim);
+// void percentual_voo_aeronave(rotas_t *rota, int rotas_cadast);
+// void total_combustivel_intervalo_data(rotas_t *rota, int rotas_cadast, int *data_inicio, int *data_fim);
+// void rota_mais_passageiros(rotas_t *rota, int rotas_cadast);
+// void rota_menos_passageiros(rotas_t *rota, int rotas_cadast);
+//void quantidade_manutencoes_nave(aeronave_t *nave, int codigo, int naves_cadast);
+//void alterar_situacao_nave(aeronave_t *nave, int codigo, int naves_cadast);
+//void cadastro_membros_tripulacao(rotas_t *rota);
+//void mostrar_membros_tripulacao(rotas_t *rota);
+// void retirar_enter(char *ptr);
+// void formatar_maiusculo(char *ptr);
+//int sub_menu_aeronave(void);
+//int sub_menu_rota(void);
+//void gerenciamento_aeronaves(int opcao, aeronave_t **Frota_naves, int *id_ultimo);
+//void gerenciamento_rotas(int opcao, rotas_t **Lista_rotas, int *id_ultimo);
+//void sub_menu_saida(/*----------*/);
 void carregar_arquivos(/*-------*/);
 void salvar_arquivos(/*---------*/);
-void inserir_lista_fim_nave(aeronave_t **Primeiro, aeronave_t *novo_elemento);
+//void inserir_lista_fim_nave(aeronave_t **Primeiro, aeronave_t *novo_elemento);
 aeronave_t *localizar_fim_da_lista_nave(aeronave_t *Primeiro);
-void inserir_lista_fim_rota(rotas_t **Primeiro, rotas_t *novo_elemento);
+//void inserir_lista_fim_rota(rotas_t **Primeiro, rotas_t *novo_elemento);
 rotas_t *localizar_fim_da_lista_rota(rotas_t *Primeiro);
 void apagar_item_lista(/*-------*/);
 void encontrar_anterior(/*------*/);
-void mostrar_fabricantes(void);
-void gerar_identificacao_nave(void);
-void scanf_melhorado_simples(char tipo, void *destino);
-void limpar_tela(void);
-void mostar_msg(char *msg);
+//void mostrar_fabricantes(void);
+//void gerar_identificacao_nave(void);
+//void scanf_melhorado_simples(char tipo, void *destino);
+//void limpar_tela(void);
+//void mostar_msg(char *msg);
 
 int main ()
 {

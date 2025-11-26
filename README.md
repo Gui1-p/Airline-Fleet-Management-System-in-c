@@ -2,7 +2,7 @@
 
 ![Linguagem C](https://img.shields.io/badge/Linguagem-C-blue.svg)
 ![Padrão](https://img.shields.io/badge/Padrão-C99-lightgrey.svg)
-![Nível](https://img.shields.io/badge/Nível-Intermediário-brightgreen.svg)
+
 
 ## 📖 Sobre o Projeto
 Este projeto/trabalho é um sistema de gerenciamento de frota aérea para uma nova CIA, desenvolvido em C. O objetivo é aplicar conceitos de programação procedural, structs, ponteiros e modularização para criar um sistema de gerenciamento completo.

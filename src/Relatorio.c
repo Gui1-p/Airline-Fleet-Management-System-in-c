@@ -6,6 +6,11 @@
 //Função base para exibição de aeronaves
 void informacao_aeronave(const aeronave_t* const aeronave)
 {
+    if(aeronave == NULL){
+        printf("A aeronave procurada não esta cadastrada!\n");
+        return;
+    }
+
     printf("Identificação..........................: %i\n", aeronave->Identificacao);
     
     printf("Modelo.................................: %s\n", aeronave->Modelo);
@@ -25,13 +30,14 @@ void informacao_aeronave(const aeronave_t* const aeronave)
     printf("Tripulação necessária..................: %i\n", aeronave->Tripulacao_necessaria);
 }
 
-void listagem_nave_prefixo(lista_rotas_t *Primeiro, char *matricula_buscada)
+aeronave_t* buscar_nave_prefixo(lista_rotas_t *Primeiro, char *matricula_buscada)
 {
     for(Primeiro; Primeiro != NULL; Primeiro = Primeiro->Proximo){
         if(strcmp(Primeiro->Matricula, matricula_buscada) == 0){
-            informacao_aeronave(Primeiro);
+            return Primeiro;
         }
     }
+    return NULL;
 }
 
 

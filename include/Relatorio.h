@@ -8,7 +8,7 @@
 */
 
 void informacao_aeronave(const aeronave_t* const aeronave);
-void listagem_nave_prefixo(lista_rotas_t *Primeiro, char *matricula_buscada);//modificar para usar o total de naves cadastradas
+void buscar_nave_prefixo(lista_rotas_t *Primeiro, char *matricula_buscada);//modificar para usar o total de naves cadastradas
 void listagem_aeronave_fabricante(aeronave_t *nave, int naves_cadast, int fabricante);
 void listagem_aeronave_tipo(aeronave_t *nave, int naves_cadast, int tipo);
 void listagem_aeronave_modelo(aeronave_t *nave, int naves_cadast, char *modelo);

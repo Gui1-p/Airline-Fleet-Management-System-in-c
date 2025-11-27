@@ -1,3 +1,8 @@
+#ifndef TYPES_H
+#define TYPES_H
+
+
+
 #define SIZE_STR_1          7 
 #define SIZE_STR_2          20
 #define TOTAL_FABRICANTES   5
@@ -54,7 +59,7 @@ typedef struct aeronave{
 typedef struct rotas{
     int Codigo;
     data_t Data;
-    hora_t Hora;
+    hora_t Horario;
     string_20 Local_partida;
     string_20 Local_destino;
     hora_t Tempo_estimado_voo;
@@ -78,3 +83,6 @@ typedef struct lista_rotas{
     struct lista_rotas *Primeiro;
     struct lista_rotas *Ultimo;
 } lista_rotas_t;
+
+
+#endif

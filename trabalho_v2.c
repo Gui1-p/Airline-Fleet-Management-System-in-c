@@ -862,19 +862,19 @@ void mostrar_membros_tripulacao(rotas_t *rota)
     }
 }
 
-void inserir_lista_fim_nave(aeronave_t **Primeiro, aeronave_t *novo_elemento)
-{
-    aeronave_t *ultimo = NULL;
+// void inserir_lista_fim_nave(aeronave_t **Primeiro, aeronave_t *novo_elemento)
+// {
+//     aeronave_t *ultimo = NULL;
     
-    if (*Primeiro == NULL){
-        *Primeiro = novo_elemento;
-    }
-    else{
-        ultimo = localizar_fim_da_lista_nave(*Primeiro);
-        ultimo->Proximo = novo_elemento;
-    }
+//     if (*Primeiro == NULL){
+//         *Primeiro = novo_elemento;
+//     }
+//     else{
+//         ultimo = localizar_fim_da_lista_nave(*Primeiro);
+//         ultimo->Proximo = novo_elemento;
+//     }
 
-}
+// }
 
 aeronave_t *localizar_fim_da_lista_nave(aeronave_t *Primeiro)
 {
@@ -883,18 +883,18 @@ aeronave_t *localizar_fim_da_lista_nave(aeronave_t *Primeiro)
     return Primeiro;
 }
 
-void inserir_lista_fim_rota(rotas_t **Primeiro, rotas_t *novo_elemento)
-{
-    rotas_t *ultimo = NULL;
+// void inserir_lista_fim_rota(rotas_t **Primeiro, rotas_t *novo_elemento)
+// {
+//     rotas_t *ultimo = NULL;
     
-    if (*Primeiro == NULL){
-        *Primeiro = novo_elemento;
-    }
-    else{
-        ultimo = localizar_fim_da_lista_rota(*Primeiro);
-        ultimo->Proximo = novo_elemento;
-    }
-}
+//     if (*Primeiro == NULL){
+//         *Primeiro = novo_elemento;
+//     }
+//     else{
+//         ultimo = localizar_fim_da_lista_rota(*Primeiro);
+//         ultimo->Proximo = novo_elemento;
+//     }
+// }
 
 rotas_t *localizar_fim_da_lista_rota(rotas_t *Primeiro)
 {

@@ -3,9 +3,11 @@ int main ()
     int opcao;
     unsigned int ultimo_id_nave, ultimo_id_rota;
 
-    aeronave_t *Frota_aeronave = NULL;
-    rotas_t *Lista_rotas = NULL;
+    lista_naves_t Frota_aeronaves;
+    lista_rotas_t Lista_rotas;
 
+    inicializar_lista_nave(&Frota_aeronaves);
+    inicializar_lista_rota(&Lista_rotas);
 
     do{
         opcao =  menu();

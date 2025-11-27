@@ -1,9 +1,14 @@
+#ifndef RELATORIO_H
+#define RELATORIO_H
+
+#include "Types.h"
+
 /*
     RELATORIOS DE AERONAVES
 */
 
-void informacao_aeronave(const aeronave_t * const aeronave);
-int busca_nave_prefixo(aeronave_t *aeronave, char *matricula_buscada);//modificar para usar o total de naves cadastradas
+void informacao_aeronave(const aeronave_t* const aeronave);
+void listagem_nave_prefixo(lista_rotas_t *Primeiro, char *matricula_buscada);//modificar para usar o total de naves cadastradas
 void listagem_aeronave_fabricante(aeronave_t *nave, int naves_cadast, int fabricante);
 void listagem_aeronave_tipo(aeronave_t *nave, int naves_cadast, int tipo);
 void listagem_aeronave_modelo(aeronave_t *nave, int naves_cadast, char *modelo);
@@ -27,3 +32,7 @@ void percentual_voo_aeronave(rotas_t *rota, int rotas_cadast);
 void total_combustivel_intervalo_data(rotas_t *rota, int rotas_cadast, int *data_inicio, int *data_fim);
 void rota_mais_passageiros(rotas_t *rota, int rotas_cadast);
 void rota_menos_passageiros(rotas_t *rota, int rotas_cadast);
+
+
+
+#endif

@@ -3,17 +3,19 @@
 
 #include "Types.h"
 
-void inicializar_lista_nave(lista_naves_t *lista);
-void inicializar_lista_rota(lista_rotas_t *lista);
 
-aeronave_t *cadastro_aeronave(void);
-rotas_t *cadastro_rota(void);
+//Cadastros
+aeronave_t *cadastro_aeronave(int *id_nave);
+rotas_t *cadastro_rota(int *id_rota);
 
+//Inicializar listas
+void inicializar_lista_aeronaves(lista_naves_t *lista);
+void inicializar_lista_rotas(lista_rotas_t *lista);
 
-void cadastro_membros_tripulacao(rotas_t *rota);
+//Inserção na lista
+void inserir_aeronave_lista(lista_naves_t *frota, aeronave_t *nave_cadastrada);
+void inserir_rota_lista(lista_rotas_t *lista, rotas_t *rota_cadastrada);
 
-void inserir_lista_fim_nave(aeronave_t **Primeiro, aeronave_t *novo_elemento);
-void inserir_lista_fim_rota(rotas_t **Primeiro, rotas_t *novo_elemento);
 
 
 

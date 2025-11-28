@@ -8,7 +8,6 @@
 #define TOTAL_FABRICANTES   5
 
 
-
 typedef char string_20[SIZE_STR_2];
 
 typedef struct data{
@@ -32,13 +31,13 @@ typedef enum {
 } fabricantes_t;
 
 typedef enum {
-    MANUTENCAO,
-    OPERACAO
+    MANUTENCAO = 0,
+    OPERACAO = 1
 } situacao_t;
 
 typedef enum {
-    CARGA,
-    TRANSPORTE
+    CARGA = 0,
+    TRANSPORTE = 1
 } tipos_t;
 
 

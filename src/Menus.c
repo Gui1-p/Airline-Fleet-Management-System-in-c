@@ -1,23 +1,23 @@
+#include "../include/Menus.h"
 
-
-
-int menu()
+int menu_principal(void)
 {
     int opcao;
+
     printf("1.Menu - Aeronaves;\n");
     printf("2.Menu - Rotas;\n");
     printf("0.Sair do programa;\n");
     scanf_melhorado_simples('i', &opcao);  
+    
     if(opcao > 2 || opcao < 0){
         printf("Esta opcao nao eh valida!\n");
         return;
     }
-    else{
-        
-    }
+
+    return opcao;
 }
 
-int sub_menu_aeronave()
+int sub_menu_aeronaves(void)
 {
     int opcao; 
 
@@ -30,7 +30,7 @@ int sub_menu_aeronave()
     printf("7.Listar aeronaves por ano de fabricação; \n");
     printf("8.Listar aeronaves por situação (em operação ou em manutenção); \n");
     printf("9.Alterar Situação da aeronave;\n");
-    printf("10.Quantidade de vezes que uma determinada aeronave entrou em manutenção; \n");
+    printf("10.Quantidade de vezes que uma aeronave entrou em manutenção; \n");
     printf("0.Voltar;\n");
     scanf_melhorado_simples('i', &opcao);  
     
@@ -38,10 +38,13 @@ int sub_menu_aeronave()
         printf("Esta opcao nao eh valida!\n");
         return;
     }
+
+
     return opcao; 
+
 }
 
-int sub_menu_rota()
+int sub_menu_rotas(void)
 {
     int opcao;
 
@@ -61,6 +64,25 @@ int sub_menu_rota()
         printf("Esta opcao nao eh valida!\n");
         return;
     }
+
+
     return opcao;
-    
+}
+
+int sub_menu_saida(void)
+{
+    int opcao;
+
+    printf("1.Sair\n");
+    printf("2.Salvar em arquivo binário e sair\n");
+    printf("3.Salvar em arquivo texto e sair\n");
+    printf("0.Voltar\n");
+    scanf_melhorado_simples('i', &opcao);
+
+    if(opcao > 3 || opcao < 0){
+        printf("Esta opcao nao eh valida\n");
+        return;
+    }
+
+    return opcao;
 }

@@ -1,19 +1,11 @@
 #include "../include/Cadastro.h"
+#include <stdlib.h>
+#include <stdio.h>
 
-void inicializar_lista_nave(lista_naves_t *lista)
-{
-    lista->Primeiro = NULL;
-    lista->Ultimo = NULL;
-    lista->Contador = 0;
-}
-void inicializar_lista_rota(lista_rotas_t *lista)
-{
-    lista->Primeiro = NULL;
-    lista->Ultimo = NULL;
-    lista->Contador = 0;
-}
+#define MANUTENCAO  0
+#define OPERACAO    1
 
-
+//Cadastros
 aeronave_t *cadastro_aeronave(unsigned int *id_nave)
 {
     aeronave_t *aeronave = NULL;
@@ -22,56 +14,40 @@ aeronave_t *cadastro_aeronave(unsigned int *id_nave)
 
     printf("A identificacao da aeronave é: %i\n", *id_nave);
 
-    perfumaria_linha();
-
     printf("Digite o modelo da aeronave:\n");
     leitura_string(aeronave->Modelo, SIZE_STR_1);
-
-    perfumaria_linha();
 
     printf("Digite a fabricante da aeronave:\n");
     mostrar_fabricantes();
     scanf_melhorado_simples('i', &aeronave->Fabricante);  
 
-    perfumaria_linha();
-
     printf("Digite a matrícula da aeronave:\n");
     leitura_string(aeronave->Matricula, SIZE_STR_1);
 
-    perfumaria_linha();
-
     printf("Digite o ano de fabricacao da aeronave:\n");
     scanf_melhorado_simples('i', &aeronave->Ano_fabricacao);
-
-    perfumaria_linha();
 
     printf("Digite o tipo da aeronave:\n");
     printf("Digite 0 se ela for para transporte de carga.\n");
     printf("Digite 1 se ela for para transporte de passageiros.\n");
     scanf_melhorado_simples('i', &aeronave->Tipo);
 
-    perfumaria_linha();
-
     printf("Digite o número de passageiros que a aeronave transporta:\n");
     scanf_melhorado_simples('i', &aeronave->Numero_passageiros);
 
-    perfumaria_linha();
-
-    printf("Digite a situacao da aeronave:\n");
+    printf("Situacao da aeronave:\n");
     printf("Digite 0 se ela estiver em manutencao.\n");
     printf("Digite 1 se ela estiver em operacao.\n");
     scanf_melhorado_simples('i', &aeronave->Situacao);
-
-    perfumaria_linha();
 
     printf("Digite a tripulacao necessária para a operar a aeronave:\n");
     scanf_melhorado_simples('i', &aeronave->Tripulacao_necessaria);
 
     if (!aeronave.Situacao){
-        aeronave->Qtd_manutencao = 1;
+        aeronave->Qtd_manutencao = MANUTENCAO;
     }
     else{
-        aeronave->Qtd_manutencao = 0;
+        aeronave->Qtd_manutencao = OPERACAO;
     }
 
     aeronave->Proximo = NULL;
@@ -126,26 +102,40 @@ rotas_t *cadastro_rota(unsigned int *id_rota)
     return rota;
 }
 
-void inserir_lista_fim_nave(lista_naves_t *lista, aeronave_t *novo_elemento)
-{   
-    if (lista->Ultimo == NULL) {
-        lista->Primeiro = novo_elemento;
-        lista->Ultimo = novo_elemento;
-    }
-    else {
-        lista->fim->Proximo = novo_elemento;
-        lista->fim = novo_elemento;
-    }
+//Inicializar listas
+void inicializar_lista_aeronaves(lista_naves_t *lista)
+{
+    lista->Primeiro = NULL;
+    lista->Ultimo = NULL;
+    lista->Contador = 0;
+}
+void inicializar_lista_rotas(lista_rotas_t *lista)
+{
+    lista->Primeiro = NULL;
+    lista->Ultimo = NULL;
+    lista->Contador = 0;
 }
 
-void inserir_lista_fim_rota(lista_rotas_t *lista, rotas_t *novo_elemento)
+//Inserção na lista
+void inserir_aeronave_lista(lista_naves_t *frota, aeronave_t *nave_cadastrada)
 {
-    if (lista->Ultimo == NULL){
-        lista->Primeiro = novo_elemento;
-        lista->Ultimo = novo_elemento;
+    if(frota->Primeiro == NULL){
+        frota->Primeiro = nave_cadastrada;
+        frota->Ultimo = nave_cadastrada;
+        return;
     }
-    else{
-        lista->fim->Proximo = novo_elemento;
-        lista->fim = novo_elemento;
+
+    frota->Ultimo->Proximo = nave_cadastrada;
+    frota->Ultimo = nave_cadastrada;
+}
+
+void inserir_rota_lista(lista_rotas_t *lista, rotas_t *rota_cadastrada)
+{
+    if(lista->Primeiro == NULL){
+        lista->Primeiro = rota_cadastrada;
+        lista->Ultimo = rota_cadastrada;
     }
+
+    lista->Ultimo->Proximo = rota_cadastrada;
+    lista->ultimo = rota_cadastrada;
 }

@@ -6,6 +6,11 @@
 #define SIZE_STR_1          7 
 #define SIZE_STR_2          20
 #define TOTAL_FABRICANTES   5
+#define TOTAL_TIPOS_NAVE    2
+
+const char situacao_Nave[][] = {"Manutenção", "Operação"};
+const char fabricantes_Nave[TOTAL_FABRICANTES][] = {"Embraer", "Boeing", "Airbus", "Comac", "Outro"};
+const char tipo_Nave[][] = {"Carga", "Transporte"};
 
 
 typedef char string_20[SIZE_STR_2];

@@ -27,9 +27,9 @@
 #define SIZE_STR_2          20
 #define TOTAL_FABRICANTES   5
 
-// const char situacao_Nave[2][12] = {"Manutenção", "Operação"};
-// const char fabricantes_Nave[TOTAL_FABRICANTES][8] = {"Embraer", "Boeing", "Airbus", "Comac", "Outro"};
-// const char tipo_Nave[2][12] = {"Carga", "Transporte"};
+const char situacao_Nave[2][12] = {"Manutenção", "Operação"};
+const char fabricantes_Nave[TOTAL_FABRICANTES][8] = {"Embraer", "Boeing", "Airbus", "Comac", "Outro"};
+const char tipo_Nave[2][12] = {"Carga", "Transporte"};
 
 // typedef enum {
 //     Embraer =   0,

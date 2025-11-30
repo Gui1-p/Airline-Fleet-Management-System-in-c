@@ -6,7 +6,7 @@ void gerenciamento_aeronave(int opcao, lista_naves_t frota_nave)
 {
 
     switch (opcao){
-        case 1: 
+        case 1: inserir_aeronave_lista(&frota_nave, cadastro_aeronave(frota_nave.Contador));
                 break;
         case 2: 
                 break;
@@ -33,7 +33,7 @@ void gerenciamento_aeronave(int opcao, lista_naves_t frota_nave)
 void gerenciamento_rotas(int opcao, lista_rotas_t lista_rota)
 {
     switch (opcao){
-        case 1: 
+        case 1: inserir_rota_lista(&lista_rota, cadastro_aeronave(&lista_rota.Contador));
                 break;
         case 2: 
                 break;

@@ -1,14 +1,15 @@
 #include "../include/Gerenciamento.h"
 #include "../include/Cadastro.h"
 #include "../include/menus.h"
+#include "../include/Relatorio.h"
 
-void gerenciamento_aeronave(int opcao, lista_naves_t frota_nave)
+void gerenciamento_aeronave(int opcao, lista_naves_t *frota_nave)
 {
 
     switch (opcao){
-        case 1: inserir_aeronave_lista(&frota_nave, cadastro_aeronave(frota_nave.Contador));
+        case 1: inserir_aeronave_lista(frota_nave, cadastro_aeronave(frota_nave->Contador));
                 break;
-        case 2: 
+        case 2: listar_aeronaves(frota_nave->Primeiro);
                 break;
         case 3: 
                 break;
@@ -26,16 +27,18 @@ void gerenciamento_aeronave(int opcao, lista_naves_t frota_nave)
                 break;
         case 10:
                 break;
+        case 0:
+                break;
 }
 
 }
 
-void gerenciamento_rotas(int opcao, lista_rotas_t lista_rota)
+void gerenciamento_rotas(int opcao, lista_rotas_t *lista_rota)
 {
     switch (opcao){
-        case 1: inserir_rota_lista(&lista_rota, cadastro_aeronave(&lista_rota.Contador));
+        case 1: inserir_rota_lista(lista_rota, cadastro_aeronave(&lista_rota->Contador));
                 break;
-        case 2: 
+        case 2: listar_rotas(lista_rota->Primeiro);
                 break;
         case 3: 
                 break;
@@ -52,6 +55,8 @@ void gerenciamento_rotas(int opcao, lista_rotas_t lista_rota)
         case 9: 
                 break;
         case 10:
+                break;
+        case 0: 
                 break;
 }
 }
@@ -70,15 +75,6 @@ void gerenciamento_saida(int opcao)
                 break;
         case 5: 
                 break;
-        case 6: 
-                break;
-        case 7: 
-                break;
-        case 8: 
-                break;
-        case 9: 
-                break;
-        case 10:
-                break;
-        }
+
+}
 }

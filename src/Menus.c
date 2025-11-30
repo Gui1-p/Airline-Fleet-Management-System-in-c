@@ -49,14 +49,15 @@ int sub_menu_rotas(void)
     int opcao;
 
     printf("1.Cadastro de rotas; \n");
-    printf("2.Consultar rota por data; \n");
-    printf("3.Listar rotas por destino; \n");
-    printf("4.Listar rotas por origem; \n");
-    printf("5.Percentual de voos realizados para um determinado destino em um intervalo de datas; \n");
-    printf("6.Percentual de voos realizados por aeronave; \n");
-    printf("7.Consumo de combustível total em um intervalo de datas; \n");
-    printf("8.Listar rotas com maior número de passageiros; \n");
-    printf("9.Listar rotas com menor número de passageiros; \n");
+    printf("2.Relatório de rotas;\n");
+    printf("3.Consultar rota por data; \n");
+    printf("4.Listar rotas por destino; \n");
+    printf("5.Listar rotas por origem; \n");
+    printf("6.Percentual de voos realizados para um determinado destino em um intervalo de datas; \n");
+    printf("7.Percentual de voos realizados por aeronave; \n");
+    printf("8.Consumo de combustível total em um intervalo de datas; \n");
+    printf("9.Listar rotas com maior número de passageiros; \n");
+    printf("10.Listar rotas com menor número de passageiros; \n");
     printf("0.Voltar;\n");
     scanf_melhorado_simples('i', &opcao);
     

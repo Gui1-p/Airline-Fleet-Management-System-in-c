@@ -28,7 +28,7 @@ void retirar_enter(char *ptr)
 void formatar_maiusculo(char *ptr)
 {
     for(int i = 0; i < strlen(ptr); i++){
-        toupper(*(ptr + i));
+        *(str + i) = toupper(*(ptr + i));
     }
 }
 

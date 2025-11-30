@@ -16,7 +16,7 @@ void inicializar_lista_rotas(lista_rotas_t *lista);
 void inserir_aeronave_lista(lista_naves_t *frota, aeronave_t *nave_cadastrada);
 void inserir_rota_lista(lista_rotas_t *lista, rotas_t *rota_cadastrada);
 
-
+void cadastro_membros_tripulacao(rotas_t *rota);
 
 
 #endif

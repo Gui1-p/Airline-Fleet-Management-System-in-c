@@ -43,7 +43,7 @@ aeronave_t *cadastro_aeronave(unsigned int *id_nave)
     printf("Digite a tripulacao necessária para a operar a aeronave:\n");
     scanf_melhorado_simples('i', &aeronave->Tripulacao_necessaria);
 
-    if (!aeronave.Situacao){
+    if (!aeronave->Situacao){
         aeronave->Qtd_manutencao = MANUTENCAO;
     }
     else{
@@ -65,10 +65,10 @@ rotas_t *cadastro_rota(unsigned int *id_rota)
     printf("O código da rota é...........................: %i", *id_rota);
     
     printf("Data de partida(dd/mm/aaaa)..................: ");
-    scanf("%i/%i/%i", &rota->Data->Dia, &rota->Data->Mes, &rota->Data->Ano);
+    scanf("%i/%i/%i", &rota->Data.Dia, &rota->Data.Mes, &rota->Data.Ano);
     getchar();
     printf("Hora de partida(hh:mm:ss)....................: ");
-    scanf("%i:%i:%i", &rota->Horario->Hora, &rota->Horario->Minuto, &rota->Horario->Segundo);
+    scanf("%i:%i:%i", &rota->Horario.Hora, &rota->Horario.Minuto, &rota->Horario.Segundo);
     getchar();
     
     printf("Digite o local de partida (origem)...........: ");
@@ -78,7 +78,7 @@ rotas_t *cadastro_rota(unsigned int *id_rota)
     leitura_string(rota->Local_destino, SIZE_STR_2);
     
     printf("Digite o tempo estimado de voo (hh:mm:ss)....: ");
-    scanf("%i:%i:%i", &rota->Tempo_estimado_voo->Hora, &rota->Tempo_estimado_voo->Minuto, &rota->Tempo_estimado_voo->Segundo);
+    scanf("%i:%i:%i", &rota->Tempo_estimado_voo.Hora, &rota->Tempo_estimado_voo.Minuto, &rota->Tempo_estimado_voo.Segundo);
     getchar();
 
     printf("Digite o combustível necessário (em litros)..: ");
@@ -137,5 +137,25 @@ void inserir_rota_lista(lista_rotas_t *lista, rotas_t *rota_cadastrada)
     }
 
     lista->Ultimo->Proximo = rota_cadastrada;
-    lista->ultimo = rota_cadastrada;
+    lista->Ultimo = rota_cadastrada;
+}
+
+
+void cadastro_membros_tripulacao(rotas_t *rota)
+{
+    rota->Total_membros = 0;
+    int opc, i = 0;
+
+    do{
+        leitura_string(rota->Membros_tripulacao[i], SIZE_STR_2);
+        rota->Total_membros += 1;
+
+        i++;
+
+        printf("1. Cadastar membro da tripulação.\n");
+        printf("0. Parar de cadastrar\n");
+        scanf_melhorado_simples('i', &opc);
+
+    } while(opc != 0 && i != 19);
+
 }

@@ -12,10 +12,10 @@ int main ()
         opcao =  menu();
         switch (opcao) {    
 
-            case 1: gerenciamento_aeronaves(sub_menu_aeronave(), Frota_aeronave);
+            case 1: gerenciamento_aeronaves(sub_menu_aeronave(), &Frota_aeronaves);
                     break;
 
-            case 2: gerenciamento_rotas(sub_menu_rota(), Lista_rotas);
+            case 2: gerenciamento_rotas(sub_menu_rota(), &Lista_rotas);
                     break;
 
             case 0: sub_menu_saida();

@@ -59,7 +59,7 @@ void mostrar_membros_tripulacao(const rotas_t *rota)
 /*
     FUNÇÕES DE AERONAVES
 */
-void listar_aeronaves(lista_naves_t *frota_primeiro)
+void listar_aeronaves(aeronave_t *frota_primeiro)
 {
     for(frota_primeiro; frota_primeiro != NULL, frota_primeiro = frota_primeiro->Proximo){
         informacao_aeronave(frota_primeiro);
@@ -71,7 +71,7 @@ void listar_aeronaves(lista_naves_t *frota_primeiro)
 /*
     FUNÇÕES DE ROTAS
 */
-void listar_rotas(lista_rotas_t *rotas_primeiro)
+void listar_rotas(rotas_t *rotas_primeiro)
 {
     for(rotas_primeiro; rotas_primeiro != NULL; rotas_primeiro = rotas_primeiro->Proximo){
         informacao_rota(rotas_primeiro);

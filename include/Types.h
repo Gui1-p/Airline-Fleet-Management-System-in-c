@@ -8,9 +8,10 @@
 #define TOTAL_FABRICANTES   5
 #define TOTAL_TIPOS_NAVE    2
 
-const char situacao_Nave[][] = {"Manutenção", "Operação"};
-const char fabricantes_Nave[TOTAL_FABRICANTES][] = {"Embraer", "Boeing", "Airbus", "Comac", "Outro"};
-const char tipo_Nave[][] = {"Carga", "Transporte"};
+
+const char situacao_Nave[2][SIZE_STR_2] = {"Manutenção", "Operação"};
+const char fabricantes_Nave[TOTAL_FABRICANTES][SIZE_STR_2] = {"Embraer", "Boeing", "Airbus", "Comac", "Outro"};
+const char tipo_Nave[TOTAL_TIPOS_NAVE][SIZE_STR_2] = {"Carga", "Transporte"};
 
 
 typedef char string_20[SIZE_STR_2];
@@ -78,14 +79,14 @@ typedef struct rotas{
 
 typedef struct lista_naves{
     unsigned int Contador;
-    struct lista_naves *Primeiro;
-    struct lista_naves *Ultimo;
+    aeronave_t *Primeiro;
+    aeronave_t *Ultimo;
 } lista_naves_t;
 
 typedef struct lista_rotas{
     unsigned int Contador;
-    struct lista_rotas *Primeiro;
-    struct lista_rotas *Ultimo;
+    rotas_t *Primeiro;
+    rotas_t *Ultimo;
 } lista_rotas_t;
 
 

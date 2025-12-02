@@ -11,14 +11,14 @@ void mostrar_membros_tripulacao(const rotas_t *rota);
 /*
     FUNÇÕES DE AERONAVES
 */
-void listar_aeronaves(lista_naves_t frota);
+void listar_aeronaves(aeronave_t *frota);
 
 
 
 /*
     FUNÇÕES DE ROTAS
 */
-void listar_rotas(lista_rotas_t rotas);
+void listar_rotas(rotas_t *rotas);
 
 
 #endif

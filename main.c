@@ -1,3 +1,14 @@
+#include "include/Types.h"
+#include "include/Relatorio.h"
+#include "include/Menus.h"
+#include "include/Gerenciamento.h"
+#include "include/Cadastro.h"
+#include "include/Auxiliar.h"
+#include "include/Arquivos.h"
+
+
+
+
 int main ()
 {
     int opcao;

@@ -1,4 +1,5 @@
 #include "../include/Cadastro.h"
+#include "../include/Auxiliar.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -91,7 +92,7 @@ rotas_t *cadastro_rota(unsigned int *id_rota)
     scanf_melhorado_simples('f', &rota->Quantidade_carga);
 
     printf("Digite o nome dos membros da tripulação......: ");
-    cadastro_membros_tripulacao(&rota);
+    cadastro_membros_tripulacao(rota);
 
     printf("Digite a aeronave alocada (código)...........: ");
     scanf_melhorado_simples('i', &rota->Aeronave_alocada);
@@ -134,6 +135,7 @@ void inserir_rota_lista(lista_rotas_t *lista, rotas_t *rota_cadastrada)
     if(lista->Primeiro == NULL){
         lista->Primeiro = rota_cadastrada;
         lista->Ultimo = rota_cadastrada;
+        return;
     }
 
     lista->Ultimo->Proximo = rota_cadastrada;
@@ -148,7 +150,7 @@ void cadastro_membros_tripulacao(rotas_t *rota)
 
     do{
         leitura_string(rota->Membros_tripulacao[i], SIZE_STR_2);
-        rota->Total_membros += 1;
+        rota->Total_membros += 1;   
 
         i++;
 

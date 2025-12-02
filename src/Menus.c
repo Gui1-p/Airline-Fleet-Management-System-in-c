@@ -1,4 +1,5 @@
 #include "../include/Menus.h"
+#include <stdio.h>
 
 int menu_principal(void)
 {
@@ -11,7 +12,7 @@ int menu_principal(void)
     
     if(opcao > 2 || opcao < 0){
         printf("Esta opcao nao eh valida!\n");
-        return;
+        return menu_principal();
     }
 
     return opcao;
@@ -36,7 +37,7 @@ int sub_menu_aeronaves(void)
     
     if(opcao > 10 || opcao < 0){
         printf("Esta opcao nao eh valida!\n");
-        return;
+        return sub_menu_aeronaves();
     }
 
 
@@ -63,7 +64,7 @@ int sub_menu_rotas(void)
     
     if(opcao > 9 || opcao < 0){
         printf("Esta opcao nao eh valida!\n");
-        return;
+        return sub_menu_rotas();
     }
 
 
@@ -82,7 +83,7 @@ int sub_menu_saida(void)
 
     if(opcao > 3 || opcao < 0){
         printf("Esta opcao nao eh valida\n");
-        return;
+        return sub_menu_saida();
     }
 
     return opcao;

@@ -1,7 +1,9 @@
 #include "../include/Auxiliar.h"
-#include <ctypes.h>
+#include "../include/Types.h"
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 
 
@@ -28,7 +30,7 @@ void retirar_enter(char *ptr)
 void formatar_maiusculo(char *ptr)
 {
     for(int i = 0; i < strlen(ptr); i++){
-        *(str + i) = toupper(*(ptr + i));
+        *(ptr + i) = toupper(*(ptr + i));
     }
 }
 
@@ -73,7 +75,7 @@ int escolha_tipo(void)
     int opcao;
 
     printf("Digite o número correspondente ao fabricante da aeronave que procura:\n");
-    for(int i = 0; i < TOTAL_TIPO_NAVE; i++){
+    for(int i = 0; i < TOTAL_TIPOS_NAVE; i++){
         printf("%d. %s\n", i, *(tipo_Nave + i));
     }
     scanf_melhorado_simples('i', &opcao);

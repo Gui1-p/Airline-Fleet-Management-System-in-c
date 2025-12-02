@@ -1,4 +1,6 @@
 #include "../include/Relatorio.h"
+#include <stdio.h>
+#include "../include/Auxiliar.h"
 
 //FUNÇÕES BÁSICAS DE EXIBIÇÃO
 
@@ -34,7 +36,7 @@ void informacao_rota(const rotas_t * const rota)
 
     printf("Local de destino (destino)...........: %s\n", rota->Local_destino);
 
-    printf("Tempo estimado de voo................: %i:%i:%i\n",  rota->Tempo_estimado_voo.Hora, rota->Tempo_estimado_voo.Minuto, rota->Tempo_estimado_voo..Segundo);
+    printf("Tempo estimado de voo................: %i:%i:%i\n",  rota->Tempo_estimado_voo.Hora, rota->Tempo_estimado_voo.Minuto, rota->Tempo_estimado_voo.Segundo);
 
     printf("Combustível necessário (em litros)...: %.2f\n", rota->Combustivel_necessario);
 
@@ -51,7 +53,7 @@ void mostrar_membros_tripulacao(const rotas_t *rota)
 {
     printf("Os membros da tripulação são:\n");
     for(int i = 0; i < rota->Total_membros; i++){
-        printf("->%s\n", rota->*(Membros_tripulacao + i));
+        printf("->%s\n", rota->Membros_tripulacao[i]);
     }
 }
 
@@ -61,7 +63,7 @@ void mostrar_membros_tripulacao(const rotas_t *rota)
 */
 void listar_aeronaves(aeronave_t *frota_primeiro)
 {
-    for(frota_primeiro; frota_primeiro != NULL, frota_primeiro = frota_primeiro->Proximo){
+    for(frota_primeiro; frota_primeiro != NULL; frota_primeiro = frota_primeiro->Proximo){
         informacao_aeronave(frota_primeiro);
     }
 }

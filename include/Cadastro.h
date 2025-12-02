@@ -5,8 +5,8 @@
 
 
 //Cadastros
-aeronave_t *cadastro_aeronave(int *id_nave);
-rotas_t *cadastro_rota(int *id_rota);
+aeronave_t *cadastro_aeronave(unsigned int *id_nave);
+rotas_t *cadastro_rota(unsigned int *id_rota);
 
 //Inicializar listas
 void inicializar_lista_aeronaves(lista_naves_t *lista);

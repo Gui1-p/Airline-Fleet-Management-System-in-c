@@ -56,7 +56,7 @@ void carregar_dados_naves(lista_naves_t *naves)
     }
 
     while (!feof(fp)) {
-        novo = (aeronave_t)malloc(sizeof(aeronave_t));
+        novo = (aeronave_t*)malloc(sizeof(aeronave_t));
 
         fread(novo, sizeof(aeronave_t), 1, fp);
         novo->Proximo = NULL;
@@ -84,7 +84,7 @@ void carregar_dados_rotas(lista_rotas_t *rotas)
     }
 
     while (!feof(fp)) {
-        novo = (rotas_t)malloc(sizeof(rotas_t));
+        novo = (rotas_t*)malloc(sizeof(rotas_t));
 
         fread(novo, sizeof(rotas_t), 1, fp);
         novo->Proximo = NULL;

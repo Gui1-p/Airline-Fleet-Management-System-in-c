@@ -63,14 +63,14 @@ void carregar_dados_naves(lista_naves_t *naves)
 
         if (!feof(fp)) {
             inserir_aeronave_lista(naves, novo);
+            if(naves->Contador <= novo->Identificacao) {
+                naves->Contador = novo->Identificacao + 1;
+            }
         }
         else {
             free(novo);
         }
 
-        if(novo->Proximo = NULL){
-            naves->Contador = (novo->Identificacao + 1);
-        }
     }
 
     fclose(fp);
@@ -95,15 +95,17 @@ void carregar_dados_rotas(lista_rotas_t *rotas)
         novo->Proximo = NULL;
         if (!feof(fp)) {
             inserir_rota_lista(rotas, novo);
+            
+            if(rotas->Contador <= novo->Codigo) {
+                rotas->Contador = novo->Codigo + 1;
+            }
         }
         else {
             free(novo);
         }
-
-        if(novo->Proximo = NULL){
-            rotas->Contador = (novo->Codigo + 1);
-        }
     }
+
+
 
     fclose(fp);  
 }

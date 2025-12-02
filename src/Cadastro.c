@@ -13,7 +13,8 @@ aeronave_t *cadastro_aeronave(unsigned int *id_nave)
 
     aeronave = (aeronave_t*)malloc(sizeof(aeronave_t));
 
-    printf("A identificacao da aeronave é: %i\n", *id_nave);
+    aeronave->Identificacao = *id_nave;
+    printf("A identificacao da aeronave é: %i\n", aeronave->Identificacao);
 
     printf("Digite o modelo da aeronave:\n");
     leitura_string(aeronave->Modelo, SIZE_STR_1);
@@ -63,7 +64,8 @@ rotas_t *cadastro_rota(unsigned int *id_rota, aeronave_t *nave)
     
     rota = (rotas_t*)malloc(sizeof(rotas_t));
     
-    printf("O código da rota é...........................: %i\n", *id_rota);
+    rota->Codigo = *id_rota;
+    printf("O código da rota é...........................: %i\n", rota->Codigo);
     
     printf("Data de partida(dd/mm/aaaa)..................: ");
     scanf("%i/%i/%i", &rota->Data.Dia, &rota->Data.Mes, &rota->Data.Ano);

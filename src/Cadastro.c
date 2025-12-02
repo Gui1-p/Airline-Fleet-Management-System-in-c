@@ -63,7 +63,7 @@ rotas_t *cadastro_rota(unsigned int *id_rota)
     
     rota = (rotas_t*)malloc(sizeof(rotas_t));
     
-    printf("O código da rota é...........................: %i", *id_rota);
+    printf("O código da rota é...........................: %i\n", *id_rota);
     
     printf("Data de partida(dd/mm/aaaa)..................: ");
     scanf("%i/%i/%i", &rota->Data.Dia, &rota->Data.Mes, &rota->Data.Ano);

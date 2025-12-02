@@ -5,7 +5,7 @@ TARGET = Fleet_Manegement
 LIMPAR = rm
 
 all: objetos
-	$(CC) $(OBJS)/Arquivos.o $(OBJS)/Auxiliar.o $(OBJS)/Cadastro.o $(OBJS)/Gerenciamento.o $(OBJS)/Menus.o $(OBJS)/Relatorio.o $(OBJS)/Main.o -o $(TARGET)
+	$(CC) $(OBJS)/Arquivos.o $(OBJS)/Auxiliar.o $(OBJS)/Cadastro.o $(OBJS)/Gerenciamento.o $(OBJS)/Menus.o $(OBJS)/Relatorio.o $(OBJS)/Types.o $(OBJS)/main.o -o $(TARGET)
 	
 
 objetos:
@@ -15,6 +15,7 @@ objetos:
 	$(CC) -c $(SRC)/Gerenciamento.c -o $(OBJS)/Gerenciamento.o
 	$(CC) -c $(SRC)/Menus.c -o $(OBJS)/Menus.o
 	$(CC) -c $(SRC)/Relatorio.c -o $(OBJS)/Relatorio.o
+	$(CC) -c $(SRC)/Types.c -o $(OBJS)/Types.o
 	$(CC) -c main.c -o $(OBJS)/main.o
 
 

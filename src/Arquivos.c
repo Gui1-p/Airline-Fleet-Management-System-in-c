@@ -60,6 +60,7 @@ void carregar_dados_naves(lista_naves_t *naves)
 
         fread(novo, sizeof(aeronave_t), 1, fp);
         novo->Proximo = NULL;
+
         if (!feof(fp)) {
             inserir_aeronave_lista(naves, novo);
         }
@@ -68,7 +69,7 @@ void carregar_dados_naves(lista_naves_t *naves)
         }
     }
 
-    fclose(fp);    
+    fclose(fp);
 }
 
 void carregar_dados_rotas(lista_rotas_t *rotas)

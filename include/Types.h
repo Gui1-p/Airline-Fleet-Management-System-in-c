@@ -9,9 +9,9 @@
 #define TOTAL_TIPOS_NAVE    2
 
 
-const char situacao_Nave[2][SIZE_STR_2] = {"Manutenção", "Operação"};
-const char fabricantes_Nave[TOTAL_FABRICANTES][SIZE_STR_2] = {"Embraer", "Boeing", "Airbus", "Comac", "Outro"};
-const char tipo_Nave[TOTAL_TIPOS_NAVE][SIZE_STR_2] = {"Carga", "Transporte"};
+extern const char situacao_Nave[2][SIZE_STR_2];
+extern const char fabricantes_Nave[TOTAL_FABRICANTES][SIZE_STR_2];
+extern const char tipo_Nave[TOTAL_TIPOS_NAVE][SIZE_STR_2];
 
 
 typedef char string_20[SIZE_STR_2];

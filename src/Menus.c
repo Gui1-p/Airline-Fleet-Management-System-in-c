@@ -1,4 +1,5 @@
 #include "../include/Menus.h"
+#include "../include/Auxiliar.h"
 #include <stdio.h>
 
 int menu_principal(void)

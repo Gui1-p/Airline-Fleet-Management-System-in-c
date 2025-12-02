@@ -1,6 +1,6 @@
 #include "../include/Relatorio.h"
-#include <stdio.h>
 #include "../include/Auxiliar.h"
+#include <stdio.h>
 
 //FUNÇÕES BÁSICAS DE EXIBIÇÃO
 

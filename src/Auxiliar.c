@@ -86,6 +86,6 @@ int escolha_tipo(void)
 void mostrar_fabricantes(void)
 {
     for(int i = 0; i < TOTAL_FABRICANTES; i++){
-        printf("i. %s\n", *(fabricantes_Nave + i));
+        printf("%d. %s\n", i, *(fabricantes_Nave + i));
     }
 }

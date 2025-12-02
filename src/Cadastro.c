@@ -57,7 +57,7 @@ aeronave_t *cadastro_aeronave(unsigned int *id_nave)
     return aeronave;
 }
 
-rotas_t *cadastro_rota(unsigned int *id_rota)
+rotas_t *cadastro_rota(unsigned int *id_rota, aeronave_t *nave)
 {
     rotas_t *rota;
     
@@ -93,10 +93,9 @@ rotas_t *cadastro_rota(unsigned int *id_rota)
 
     printf("Digite o nome dos membros da tripulação......: ");
     cadastro_membros_tripulacao(rota);
-
-    printf("Digite a aeronave alocada (código)...........: ");
-    scanf_melhorado_simples('i', &rota->Aeronave_alocada);
     
+    alocar_nave_rota(nave, &rota->Aeronave_alocada);
+
     rota->Proximo = NULL;
     *id_rota += 1; 
 
@@ -160,4 +159,26 @@ void cadastro_membros_tripulacao(rotas_t *rota)
 
     } while(opc != 0 && i != 19);
 
+}
+
+void alocar_nave_rota(aeronave_t *nave, int *id_nave)
+{
+
+    for(;;){
+        aeronave_t *primeiro_lista = nave;
+
+        printf("Digite a aeronave alocada (código)...........: ");
+        scanf_melhorado_simples('i', id_nave);
+
+        while(primeiro_lista != NULL){
+            if(primeiro_lista->Identificacao == *id_nave){
+                if(primeiro_lista->Situacao == OPERACAO){
+                    return;
+                }
+            }
+            primeiro_lista = primeiro_lista->Proximo;
+        }
+        printf("Aeronave inválida\n");
+
+    }
 }

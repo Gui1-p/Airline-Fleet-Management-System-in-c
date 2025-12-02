@@ -6,6 +6,8 @@ int menu_principal(void)
 {
     int opcao;
 
+    limpar_tela();
+
     printf("1.Menu - Aeronaves;\n");
     printf("2.Menu - Rotas;\n");
     printf("0.Sair do programa;\n");
@@ -16,12 +18,15 @@ int menu_principal(void)
         return menu_principal();
     }
 
+    limpar_tela();
     return opcao;
 }
 
 int sub_menu_aeronaves(void)
 {
-    int opcao; 
+    int opcao;
+    
+    limpar_tela();
 
     printf("1.Cadastro de aeronaves; \n");
     printf("2.Relatório de aeronaves; \n");
@@ -41,14 +46,15 @@ int sub_menu_aeronaves(void)
         return sub_menu_aeronaves();
     }
 
-
+    limpar_tela();
     return opcao; 
-
 }
 
 int sub_menu_rotas(void)
 {
     int opcao;
+
+    limpar_tela();
 
     printf("1.Cadastro de rotas; \n");
     printf("2.Relatório de rotas;\n");
@@ -68,13 +74,15 @@ int sub_menu_rotas(void)
         return sub_menu_rotas();
     }
 
-
+    limpar_tela();
     return opcao;
 }
 
 int sub_menu_saida(void)
 {
     int opcao;
+
+    limpar_tela();
 
     printf("1.Sair\n");
     printf("2.Salvar em arquivo binário e sair\n");
@@ -87,5 +95,6 @@ int sub_menu_saida(void)
         return sub_menu_saida();
     }
 
+    limpar_tela();
     return opcao;
 }

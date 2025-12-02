@@ -53,6 +53,7 @@ void limpar_tela(void)
 
 void mostar_msg(char *msg)
 {
+    printf("\n");
     perfumaria_linha();
     printf("%s\n", msg);
     perfumaria_linha();
@@ -87,5 +88,26 @@ void mostrar_fabricantes(void)
 {
     for(int i = 0; i < TOTAL_FABRICANTES; i++){
         printf("%d. %s\n", i, *(fabricantes_Nave + i));
+    }
+}
+
+void alterar_situacao_nave(aeronave_t *lista_nave, int id_nave)
+{
+    int contador = 0;
+
+    if(lista_nave->Identificacao == id_nave){
+        printf("0.Manutenção\n");
+        printf("1.Operação\n");
+        scanf_melhorado_simples('i', &lista_nave->Situacao);
+        return;
+    }
+
+    lista_nave = lista_nave->Proximo;
+
+    if(lista_nave->Proximo == NULL){
+        if(contador == 0){
+            printf("Está aeronave não foi encontrada\n");
+        }
+        return;
     }
 }

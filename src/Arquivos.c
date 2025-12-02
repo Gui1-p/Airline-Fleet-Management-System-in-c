@@ -67,6 +67,10 @@ void carregar_dados_naves(lista_naves_t *naves)
         else {
             free(novo);
         }
+
+        if(novo->Proximo = NULL){
+            naves->Contador = (novo->Identificacao + 1);
+        }
     }
 
     fclose(fp);
@@ -94,6 +98,10 @@ void carregar_dados_rotas(lista_rotas_t *rotas)
         }
         else {
             free(novo);
+        }
+
+        if(novo->Proximo = NULL){
+            rotas->Contador = (novo->Codigo + 1);
         }
     }
 

@@ -6,7 +6,7 @@
 
 //Cadastros
 aeronave_t *cadastro_aeronave(unsigned int *id_nave);
-rotas_t *cadastro_rota(unsigned int *id_rota);
+rotas_t *cadastro_rota(unsigned int *id_rota, aeronave_t *nave);
 
 //Inicializar listas
 void inicializar_lista_aeronaves(lista_naves_t *lista);
@@ -17,6 +17,7 @@ void inserir_aeronave_lista(lista_naves_t *frota, aeronave_t *nave_cadastrada);
 void inserir_rota_lista(lista_rotas_t *lista, rotas_t *rota_cadastrada);
 
 void cadastro_membros_tripulacao(rotas_t *rota);
+void alocar_nave_rota(aeronave_t *nave, int *id_nave);
 
 
 #endif

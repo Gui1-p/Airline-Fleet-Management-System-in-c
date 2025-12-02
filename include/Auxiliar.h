@@ -1,6 +1,8 @@
 #ifndef AUXILIAR_H
 #define AUXILIAR_H
 
+#include"Types.h"
+
 void leitura_string(char *ptr, int tamanho_vetor);
 void perfumaria_linha(void);
 void retirar_enter(char *ptr);
@@ -12,6 +14,7 @@ void mostar_msg(char *msg);
 int escolha_fabricante(void);
 int escolha_tipo(void);
 void mostrar_fabricantes(void);
+void alterar_situacao_nave(aeronave_t *lista_nave, int id_nave);
 
 
 

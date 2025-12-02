@@ -21,6 +21,7 @@ int main ()
     carregar_dados_naves(&Frota_aeronaves);
     carregar_dados_rotas(&Lista_rotas);
 
+
     do{
         opcao =  menu_principal();
         switch (opcao) {    
@@ -28,7 +29,7 @@ int main ()
             case 1: gerenciamento_aeronave(sub_menu_aeronaves(), &Frota_aeronaves);
                     break;
 
-            case 2: gerenciamento_rotas(sub_menu_rotas(), &Lista_rotas);
+            case 2: gerenciamento_rotas(sub_menu_rotas(), &Lista_rotas, Frota_aeronaves.Primeiro);
                     break;
 
             case 0: gerenciamento_saida(sub_menu_saida(), Frota_aeronaves.Primeiro, Lista_rotas.Primeiro);

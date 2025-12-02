@@ -11,14 +11,20 @@ void mostrar_membros_tripulacao(const rotas_t *rota);
 /*
     FUNÇÕES DE AERONAVES
 */
-void listar_aeronaves(aeronave_t *frota);
-
+void listar_aeronaves(const aeronave_t *frota);
+void listar_aeronaves_prefixo(const aeronave_t *frota_primeiro, char *prefixo);
+void listar_aeronaves_fabricante(const aeronave_t *frota_primeiro, int fabricante);
+void listar_aeronaves_tipo(const aeronave_t *frota_primeiro, int tipo);
+void listar_aeronaves_modelo(const aeronave_t *frota_primeiro, char *modelo);
+void listar_aeronaves_ano(const aeronave_t *frota_primeiro, int ano);
+void listar_aeronaves_situacao(const aeronave_t *frota_primeiro, int situacao);
+void qtd_matutencao_aeronave(const aeronave_t *frota_primeiro, int id_nave);
 
 
 /*
     FUNÇÕES DE ROTAS
 */
-void listar_rotas(rotas_t *rotas);
+void listar_rotas(const rotas_t *rotas);
 
 
 #endif

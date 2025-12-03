@@ -2,11 +2,12 @@
 #define RELATORIO_H
 
 #include "Types.h"
+#include <stdio.h>
 
 void informacao_aeronave(const aeronave_t * const aeronave);
 void informacao_rota(const rotas_t * const rota);
 
-void mostrar_membros_tripulacao(const rotas_t *rota);
+void mostrar_membros_tripulacao(const rotas_t *rota, FILE *fp_arq);
 
 /*
     FUNÇÕES DE AERONAVES

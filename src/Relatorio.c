@@ -45,16 +45,16 @@ void informacao_rota(const rotas_t * const rota)
 
     printf("Quantidade de carga útil.............: %.2f\n", rota->Quantidade_carga);
 
-    mostrar_membros_tripulacao(rota);
+    mostrar_membros_tripulacao(rota, stdout);
 
     printf("Aeronave alocada (código)............: %i\n", rota->Aeronave_alocada);
 }
 
-void mostrar_membros_tripulacao(const rotas_t *rota)
+void mostrar_membros_tripulacao(const rotas_t *rota, FILE *fp_arq)
 {
     printf("Os membros da tripulação são:\n");
     for(int i = 0; i < rota->Total_membros; i++){
-        printf("->%s\n", rota->Membros_tripulacao[i]);
+        fprintf(fp_arq ,"->%s\n", *(rota.Membros_tripulacao + i));
     }
 }
 

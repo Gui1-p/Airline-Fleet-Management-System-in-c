@@ -22,9 +22,16 @@ void qtd_matutencao_aeronave(const aeronave_t *frota_primeiro, int id_nave);
 
 
 /*
-    FUNÇÕES DE ROTAS
+FUNÇÕES DE ROTAS
 */
 void listar_rotas(const rotas_t *rotas);
-
+void listar_rotas_data(const rotas_t *rotas, data_t data);
+void listar_rotas_destino(const rotas_t *rotas, char *destino);
+void listar_rotas_origem(const rotas_t *rotas, char *origem);
+void percentual_voo_destino_intervalo_data(const rotas_t *rotas, data_t data_inicio, data_t data_fim, char *destino);
+void percentual_voo_aeronave(const rotas_t *rotas, const aeronave_t *naves);
+void consumo_combustivel_intervalo_data(const rotas_t *rotas, data_t data_inicio, data_t data_fim);
+void listar_rota_mais_passageiros(rotas_t *rotas);
+void listar_rota_menos_passageiros(rotas_t *rotas);
 
 #endif

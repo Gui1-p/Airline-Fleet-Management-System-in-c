@@ -69,7 +69,7 @@ int sub_menu_rotas(void)
     printf("0.Voltar;\n");
     scanf_melhorado_simples('i', &opcao);
     
-    if(opcao > 9 || opcao < 0){
+    if(opcao > 10 || opcao < 0){
         printf("Esta opcao nao eh valida!\n");
         return sub_menu_rotas();
     }
@@ -87,10 +87,11 @@ int sub_menu_saida(void)
     printf("1.Sair\n");
     printf("2.Salvar em arquivo binário e sair\n");
     printf("3.Salvar em arquivo texto e sair\n");
-    printf("0.Voltar\n");
+    printf("4.Salvar em arquivo csv e sair\n");
+    printf("5.Salvar em arquivo html e sair\n")
     scanf_melhorado_simples('i', &opcao);
 
-    if(opcao > 3 || opcao < 0){
+    if(opcao > 5 || opcao < 1){
         printf("Esta opcao nao eh valida\n");
         return sub_menu_saida();
     }

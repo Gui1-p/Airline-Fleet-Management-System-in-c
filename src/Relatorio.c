@@ -227,7 +227,6 @@ void qtd_matutencao_aeronave(const aeronave_t *frota_primeiro, int id_nave)
 
 
 
-
 /*
     FUNÇÕES DE ROTAS
 */
@@ -237,4 +236,136 @@ void listar_rotas(const rotas_t *rotas_primeiro)
         informacao_rota(rotas_primeiro);
         printf("\n");
     }
+}
+
+void listar_rotas_data(const rotas_t *rotas, data_t data)
+{
+    for(rotas; rotas != NULL; rotas = rotas->Proximo){
+        if(data.Dia == rotas->Data.Dia && data.Mes == rotas->Data.Mes && data.Ano == rotas->Data.Ano){
+            informacao_rota(rotas);
+            printf("\n");
+        }
+    }
+}
+
+void listar_rotas_destino(const rotas_t *rotas, char *destino)
+{
+        for(rotas; rotas != NULL; rotas = rotas->Proximo){
+        if(!strcmp(rotas->Local_destino, destino)){
+            informacao_rota(rotas);
+            printf("\n");
+        }
+    }
+}
+
+void listar_rotas_origem(const rotas_t *rotas, char *origem)
+{
+    for(rotas; rotas != NULL; rotas = rotas->Proximo){
+        if(!strcmp(rotas->Local_partida, origem)){
+            informacao_rota(rotas);
+            printf("\n");
+        }
+    }
+}
+
+void percentual_voo_destino_intervalo_data(const rotas_t *rotas, data_t data_inicio, data_t data_fim, char *destino)
+{
+    unsigned long int data_inicio_soma, data_fim_soma;
+    int contador_rota_destino = 0, contador_rota_destino_intervalo = 0;
+    float percentual_voos;
+
+    data_inicio_soma = ((data_inicio.Ano*10000) + (data_inicio.Mes*100) + data_inicio.Dia);
+    data_fim_soma = ((data_fim.Ano*10000) + (data_fim.Mes*100) + data_fim.Dia);
+
+    for(rotas; rotas != NULL; rotas = rotas->Proximo){
+        
+        if (!strcmp(rotas->Local_destino, destino)){
+            contador_rota_destino++;
+            
+            int data_analisada = (rotas->Data.Dia) + (rotas->Data.Mes * 100) + (rotas->Data.Ano * 10000);
+            if(data_analisada >= data_inicio_soma && data_analisada <= data_fim_soma ){
+                    contador_rota_destino_intervalo++;
+                }
+        }
+    }
+
+    percentual_voos = (contador_rota_destino_intervalo * 100) / (float)contador_rota_destino;
+
+    perfumaria_linha();
+    printf("O percentual de voos para %s no intevalo dado é: %.2f\n", destino, percentual_voos);
+    perfumaria_linha();
+}
+
+void percentual_voo_aeronave(const rotas_t *rotas, const aeronave_t *naves)
+{
+    while(naves){
+        const rotas_t *rotas_aux = rotas;
+
+        int total_voos_nave = 0, total_voos = 0;
+        float percentual_voos;
+
+        for(rotas_aux; rotas_aux != NULL; rotas_aux = rotas_aux->Proximo){
+            total_voos++;
+            if(rotas_aux->Aeronave_alocada == naves->Identificacao){
+            total_voos_nave++; 
+        }
+    }
+    percentual_voos = ((float)total_voos_nave / total_voos) * 100;
+
+    if(total_voos == 0) percentual_voos = 0;
+
+    printf("O percentual de voos da nave %d é : %.2f%%\n", naves->Identificacao, percentual_voos);
+    naves = naves->Proximo;
+    }
+}
+
+void consumo_combustivel_intervalo_data(const rotas_t *rotas, data_t data_inicio, data_t data_fim)
+{
+    unsigned long int data_inicio_soma, data_fim_soma;
+    float total_combustivel = 0;
+
+    data_inicio_soma = ((data_inicio.Ano*10000) + (data_inicio.Mes*100) + data_inicio.Dia);
+    data_fim_soma = ((data_fim.Ano*10000) + (data_fim.Mes*100) + data_fim.Dia);
+
+    for(rotas; rotas != NULL; rotas = rotas->Proximo){
+
+        int data_analisada = (rotas->Data.Dia) + (rotas->Data.Mes * 100) + (rotas->Data.Ano * 10000);
+        if(data_analisada >= data_inicio_soma && data_analisada <= data_fim_soma ){
+            total_combustivel += rotas->Combustivel_necessario;
+        }
+    }
+
+    printf("O consumo total de combustivel nesse intervalo foi de: %f", total_combustivel);
+}
+
+void listar_rota_mais_passageiros(rotas_t *rotas)
+{
+    rotas_t *maior = rotas;
+    int maior_int = rotas->Quantidade_passageiros;
+    
+    for(rotas; rotas != NULL; rotas = rotas->Proximo){
+        if(rotas->Quantidade_passageiros > maior_int){
+            maior_int = rotas->Quantidade_passageiros;
+            maior = rotas;
+        }
+    }
+
+    informacao_rota(maior);
+    printf("\n");
+}
+
+void listar_rota_menos_passageiros(rotas_t *rotas)
+{
+    rotas_t *menor = rotas;
+    int menor_int = rotas->Quantidade_passageiros;
+    
+    for(rotas; rotas != NULL; rotas = rotas->Proximo){
+        if(menor_int > rotas->Quantidade_passageiros){
+            menor_int = rotas->Quantidade_passageiros;
+            menor = rotas;
+        }
+    }
+
+    informacao_rota(menor);
+    printf("\n");
 }

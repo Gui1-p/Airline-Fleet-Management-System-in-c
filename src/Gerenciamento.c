@@ -70,7 +70,8 @@ void gerenciamento_aeronave(int opcao, lista_naves_t *frota_nave)
 
 void gerenciamento_rotas(int opcao, lista_rotas_t *lista_rota, aeronave_t *primeiro)
 {
-        char string_aux[SIZE_STR_1];
+        char string_aux[SIZE_STR_2];
+        data_t data_aux, data_aux_2;
 
     switch (opcao){
         case 1: inserir_rota_lista(lista_rota, cadastro_rota(&lista_rota->Contador, primeiro));
@@ -78,23 +79,55 @@ void gerenciamento_rotas(int opcao, lista_rotas_t *lista_rota, aeronave_t *prime
         case 2: listar_rotas(lista_rota->Primeiro);
                 mostar_msg("Pressione para continuar");
                 break;
-        case 3: 
-        
+        case 3: printf("Digite a data da rota que você procura\n");
+                scanf("%i/%i/%i", &data_aux.Dia, &data_aux.Mes, &data_aux.Ano);
+                getchar();                    
+                listar_rotas_data(lista_rota->Primeiro, data_aux);
+                mostar_msg("Pressione para continuar");
                 break;
-        case 4: 
+
+        case 4: printf("Digite o destino da rota que você procura\n");
+                leitura_string(string_aux, SIZE_STR_2);
+                listar_rotas_destino(lista_rota->Primeiro, string_aux);
+                mostar_msg("Pressione para continuar");
                 break;
-        case 5: 
-                break;
-        case 6: 
                 
+        case 5: printf("Digite o destino da rota que você procura\n");
+                leitura_string(string_aux, SIZE_STR_2);
+                listar_rotas_origem(lista_rota->Primeiro, string_aux);
+                mostar_msg("Pressione para continuar");
                 break;
-        case 7: 
+        
+        case 6: printf("Digite o destino\n");
+                leitura_string(string_aux, SIZE_STR_2);
+                printf("Digite a data de inicio\n");
+                scanf("%i/%i/%i", &data_aux.Dia, &data_aux.Mes, &data_aux.Ano);
+                getchar();
+                printf("Digite a data de termino\n");
+                scanf("%i/%i/%i", &data_aux_2.Dia, &data_aux_2.Mes, &data_aux_2.Ano);
+                getchar();
+                percentual_voo_destino_intervalo_data(lista_rota->Primeiro, data_aux, data_aux_2, string_aux);
+                mostar_msg("Pressione para continuar");
                 break;
-        case 8: 
+
+        case 7: percentual_voo_aeronave(lista_rota->Primeiro, primeiro);
+                mostar_msg("Pressione para continuar");
+                break;//Esta com problemas
+
+        case 8: printf("Digite a data de inicio do intervalo\n");
+                scanf("%i/%i/%i", &data_aux.Dia, &data_aux.Mes, &data_aux.Ano);
+                getchar();
+                printf("Digite a data de termino do intervalo\n");
+                scanf("%i/%i/%i", &data_aux_2.Dia, &data_aux_2.Mes, &data_aux_2.Ano);
+                getchar();
+                consumo_combustivel_intervalo_data(lista_rota->Primeiro, data_aux, data_aux_2);
+                mostar_msg("Pressione para continuar");
                 break;
-        case 9: 
+        case 9: listar_rota_mais_passageiros(lista_rota->Primeiro);
+                mostar_msg("Pressione para continuar");
                 break;
-        case 10:
+        case 10:listar_rota_menos_passageiros(lista_rota->Primeiro); 
+                mostar_msg("Pressione para continuar"); 
                 break;
         case 0: 
                 break;

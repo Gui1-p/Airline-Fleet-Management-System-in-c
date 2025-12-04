@@ -47,7 +47,7 @@ Este projeto possui um `Makefile` configurado para facilitar a compilação.
 * **Persistência de Dados:** Manipulação de arquivos binários e texto para salvar/carregar dados.
 
 
-  ## 📂 Estrutura do Projeto
+## 📂 Estrutura do Projeto
 
 * `src/`: Contém o código-fonte (`.c`) das implementações.
 * `include/`: Contém os cabeçalhos (`.h`) e definições de tipos.

@@ -38,5 +38,8 @@ int main ()
         }
     } while(opcao != 0);
 
+    liberar_memoria_naves(Frota_aeronaves.Primeiro);
+    liberar_memoria_rotas(Lista_rotas.Primeiro);
+
     return 0;
 }

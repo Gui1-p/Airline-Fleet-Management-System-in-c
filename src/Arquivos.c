@@ -306,3 +306,21 @@ void salvar_dados_rotas_arq_html(rotas_t *inicio, char *nome)
 
     fclose(fp);
 }
+
+//eu pego o primeiro
+//passo o proximo para ela mesma 
+//quando chegar no NULL ela volta desempilhando e liberando a memória
+
+void liberar_memoria_naves(aeronave_t *aeronaves)
+{
+    if(aeronaves == NULL) return;
+    liberar_memoria_naves(aeronaves->Proximo);
+    free(aeronaves);
+}
+
+void liberar_memoria_rotas(rotas_t *rotas)
+{
+    if(rotas == NULL) return;
+    liberar_memoria_rotas(rotas->Proximo);
+    free(rotas);
+}

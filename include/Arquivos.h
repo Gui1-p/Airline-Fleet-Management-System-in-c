@@ -25,5 +25,8 @@
     void salvar_dados_naves_arq_html(aeronave_t *inicio, char *nome);
     void salvar_dados_rotas_arq_html(rotas_t *inicio, char *nome);
 
+    void liberar_memoria_naves(aeronave_t *aeronaves);
+    void liberar_memoria_rotas(rotas_t *rotas);
+
 
 #endif

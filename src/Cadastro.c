@@ -1,5 +1,6 @@
 #include "../include/Cadastro.h"
 #include "../include/Auxiliar.h"
+#include "../include/Relatorio.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -165,8 +166,8 @@ void cadastro_membros_tripulacao(rotas_t *rota)
 
 void alocar_nave_rota(aeronave_t *nave, int *id_nave)
 {
-
-    for(;;){
+    int opc = 1;
+    while(opc){
         aeronave_t *primeiro_lista = nave;
 
         printf("Digite a aeronave alocada (código)...........: ");
@@ -181,6 +182,12 @@ void alocar_nave_rota(aeronave_t *nave, int *id_nave)
             primeiro_lista = primeiro_lista->Proximo;
         }
         printf("Aeronave inválida\n");
+        printf("Digite 1 se deseja continuar ou 0 para sair..: ");
+        scanf_melhorado_simples('i', &opc);
+        limpar_tela();
+        printf("Estas são as aeronaves cadastradas:\n");
+        listar_aeronaves(nave);
+        mostar_msg("Pressione para continuar");
 
     }
 }

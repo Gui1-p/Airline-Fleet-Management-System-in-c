@@ -64,10 +64,11 @@ void mostrar_membros_tripulacao(const rotas_t *rota, FILE *fp_arq)
 */
 void listar_aeronaves(const aeronave_t *frota_primeiro)
 {
-    for(frota_primeiro; frota_primeiro != NULL; frota_primeiro = frota_primeiro->Proximo){
-        informacao_aeronave(frota_primeiro);
-        printf("\n");
-    }
+    if(frota_primeiro == NULL) return;
+    informacao_aeronave(frota_primeiro);
+    printf("\n");
+
+    listar_aeronaves(frota_primeiro->Proximo);
 }
 
 void listar_aeronaves_prefixo(const aeronave_t *frota_primeiro, char *prefixo)

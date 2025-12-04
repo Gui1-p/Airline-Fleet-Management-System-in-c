@@ -105,12 +105,15 @@ void carregar_dados_rotas(lista_rotas_t *rotas)
             free(novo);
         }
     }
-
-
-
     fclose(fp);  
 }
 
+void mostrar_membros_tripulacao_p_arq(const rotas_t *rota, FILE *fp_arq)
+{
+    for(int i = 0; i < rota->Total_membros; i++){
+        fprintf(fp_arq ,"%s, ", rota->Membros_tripulacao[i]);
+    }
+}
 
 //Funções extras
 void dados_nave(aeronave_t *nave, FILE *fp_arq)
@@ -214,7 +217,7 @@ void salvar_dados_naves_arq_csv(aeronave_t *inicio, char *nome)
         return;
     }
 
-    fprintf(fp, "IDENTIFICAÇÃO;MODELO;FABRICANTE;MATRÍCULA;ANO DE FABRICAÇÃO;TIPO;NÚMERO DE PASSAGEIROS;SITUAÇÃO;TRIPULAÇÃO NECESSÁRIA");
+    fprintf(fp, "IDENTIFICAÇÃO;MODELO;FABRICANTE;MATRÍCULA;ANO DE FABRICAÇÃO;TIPO;NÚMERO DE PASSAGEIROS;SITUAÇÃO;TRIPULAÇÃO NECESSÁRIA\n");
     while (inicio) {
         fprintf(fp, "%i;%s;%s;%s;%i;%s;%i;%s;%i\n", inicio->Identificacao, inicio->Modelo, *(fabricantes_Nave + inicio->Fabricante), inicio->Matricula, 
             inicio->Ano_fabricacao, *(tipo_Nave + inicio->Tipo), inicio->Numero_passageiros, *(situacao_Nave + inicio->Situacao), inicio->Tripulacao_necessaria);
@@ -235,9 +238,15 @@ void salvar_dados_rotas_arq_csv(rotas_t *inicio, char *nome)
         return;
     }
 
-    fprintf(fp, "CÓDIGO;DATA;HORA;ORIGEM;DESTINO;TEMPO ESTIMADO;COMBUSTÍVEL NECESSÁRIO;QUANTIDADE DE PASSAGEIROS;CARGA ÚTIL;MEMBROS TRIPULAÇÃO; AERONAVE ALOCADA");
+    fprintf(fp, "CÓDIGO;DATA;HORA;ORIGEM;DESTINO;TEMPO ESTIMADO;COMBUSTÍVEL NECESSÁRIO;QUANTIDADE DE PASSAGEIROS;CARGA ÚTIL;MEMBROS TRIPULAÇÃO; AERONAVE ALOCADA\n");
     while (inicio) {
-        fprintf(fp, "%i;%i/%i/%i;%i:%i:%i;%s;%s;%i:%i:%i;%.2f;%i;%.2f;%s;%i\n", inicio->Codigo, inicio->Data.Dia, inicio->Data.Mes, inicio->Data.Ano, inicio->Horario.Hora, inicio->Horario.Minuto, inicio->Horario.Segundo, inicio->Local_partida, inicio->Local_destino, inicio->Tempo_estimado_voo.Hora, inicio->Tempo_estimado_voo.Minuto, inicio->Tempo_estimado_voo.Segundo, inicio->Combustivel_necessario, inicio->Quantidade_passageiros, inicio->Quantidade_carga, "Dados Imcompatíveis", inicio->Aeronave_alocada);
+        fprintf(fp, "%i;%i/%i/%i;%i:%i:%i;%s;%s;%i:%i:%i;%.2f;%i;%.2f;", inicio->Codigo, inicio->Data.Dia, inicio->Data.Mes, inicio->Data.Ano,
+            inicio->Horario.Hora, inicio->Horario.Minuto, inicio->Horario.Segundo, inicio->Local_partida, inicio->Local_destino,
+            inicio->Tempo_estimado_voo.Hora, inicio->Tempo_estimado_voo.Minuto, inicio->Tempo_estimado_voo.Segundo, inicio->Combustivel_necessario,
+            inicio->Quantidade_passageiros, inicio->Quantidade_carga);
+        mostrar_membros_tripulacao_p_arq(inicio, fp);
+        fprintf(fp, ";%i;\n", inicio->Aeronave_alocada);
+        
         inicio = inicio->Proximo;
     }
 
@@ -256,10 +265,10 @@ void salvar_dados_naves_arq_html(aeronave_t *inicio, char *nome)
     }
 
     fprintf(fp, "<HTML> <HEAD> <TITLE> RELATORIO DE NAVES </TITLE> </HEAD> <BODY> \n");
-    fprintf(fp, "<TABLE border = '1'> <TR> <TH> IDENTIFICAÇÃO </TH> <TH> MODELO </TH> <TH> FABRICANTE </TH> <TH> MATRÍCULA </TH> <TH> ANO DE FABRICAÇÃO 
-        </TH> <TH> TIPO </TH> <TH> NÚMERO DE PASSAGEIROS </TH> <TH> SITUAÇÃO </TH> <TH> TRIPULAÇÃO NECESSÁRIA </TH> </TR>\n");
+    fprintf(fp, "<TABLE border = '1'> <TR> <TH> IDENTIFICAÇÃO </TH> <TH> MODELO </TH> <TH> FABRICANTE </TH> <TH> MATRÍCULA </TH> <TH> ANO DE FABRICAÇÃO </TH>"
+        "<TH> TIPO </TH> <TH> NÚMERO DE PASSAGEIROS </TH> <TH> SITUAÇÃO </TH> <TH> TRIPULAÇÃO NECESSÁRIA </TH> </TR>\n");
     while (inicio) {
-        fprintf(fp, "<TR> <TD> %i </TD> <TD %s </TD> <TD> %s </TD> <TD> %s </TD> <TD> %i </TD> <TD> %s </TD> <TD> %i </TD> <TD> %s </TD> <TD> %i</TD> </TR>\n", 
+        fprintf(fp, "<TR> <TD> %i </TD> <TD> %s </TD> <TD> %s </TD> <TD> %s </TD> <TD> %i </TD> <TD> %s </TD> <TD> %i </TD> <TD> %s </TD> <TD> %i</TD> </TR>\n", 
             inicio->Identificacao, inicio->Modelo, *(fabricantes_Nave + inicio->Fabricante), inicio->Matricula, inicio->Ano_fabricacao, 
             *(tipo_Nave + inicio->Tipo), inicio->Numero_passageiros, *(situacao_Nave + inicio->Situacao), inicio->Tripulacao_necessaria);
         inicio = inicio->Proximo;
@@ -280,15 +289,18 @@ void salvar_dados_rotas_arq_html(rotas_t *inicio, char *nome)
     }
 
     fprintf(fp, "<HTML> <HEAD> <TITLE> RELATORIO DE ROTAS </TITLE> </HEAD> <BODY> \n");
-    fprintf(fp, "<TABLE border = '1'> <TR> <TH> CÓDIGO </TH> <TH> DATA </TH> <TH> HORA </TH> <TH> ORIGEM </TH> <TH> DESTINO 
-        </TH> <TH> TEMPO ESTIMADO </TH> <TH> COMBUSTÍVEL NECESSÁRIO </TH> <TH> QUANTIDADE DE PASSAGEIROS </TH> <TH> CARGA ÚTIL </TH> <TH>
-        MEMBROS TRIPULAÇÃO </TH> <TH>  AERONAVE ALOCADA </TH> </TR>\n");
+    fprintf(fp, "<TABLE border = '1'> <TR> <TH> CÓDIGO </TH> <TH> DATA </TH> <TH> HORA </TH> <TH> ORIGEM </TH> <TH> DESTINO </TH>"
+        "<TH> TEMPO ESTIMADO </TH> <TH> COMBUSTÍVEL NECESSÁRIO </TH> <TH> QUANTIDADE DE PASSAGEIROS </TH> <TH> CARGA ÚTIL </TH>"
+        "<TH> MEMBROS TRIPULAÇÃO </TH> <TH>  AERONAVE ALOCADA </TH> </TR>\n");
     while (inicio) {
-        fprintf(fp, "<TR> <TD> %i </TD> <TD %i/%i/%i </TD> <TD %i:%i:%i </TD> <TD %s </TD> <TD %s </TD> <TD %i:%i:%i</TD> <TD %.2f </TD> <TD>
-        %i </TD> <TD %.2f </TD> <TD %s </TD> <TD %i </TD> </TR>\n", inicio->Codigo, inicio->Data.Dia, inicio->Data.Mes, inicio->Data.Ano,
-        inicio->Horario.Hora, inicio->Horario.Minuto, inicio->Horario.Segundo, inicio->Local_partida, inicio->Local_destino, inicio->Tempo_estimado_voo.Hora,
-        inicio->Tempo_estimado_voo.Minuto, inicio->Tempo_estimado_voo.Segundo, inicio->Combustivel_necessario, inicio->Quantidade_passageiros
-        inicio->Quantidade_carga, "Dados Imcompatíveis", inicio->Aeronave_alocada);
+        fprintf(fp, "<TR> <TD> %i </TD> <TD> %i/%i/%i </TD> <TD> %i:%i:%i </TD> <TD> %s </TD> <TD> %s </TD> <TD> %i:%i:%i</TD> <TD> %.2f </TD>"
+            "<TD> %i </TD> <TD> %.2f </TD> <TD>", inicio->Codigo, inicio->Data.Dia, inicio->Data.Mes, inicio->Data.Ano,
+            inicio->Horario.Hora, inicio->Horario.Minuto, inicio->Horario.Segundo, inicio->Local_partida, inicio->Local_destino, inicio->Tempo_estimado_voo.Hora,
+            inicio->Tempo_estimado_voo.Minuto, inicio->Tempo_estimado_voo.Segundo, inicio->Combustivel_necessario, inicio->Quantidade_passageiros,
+            inicio->Quantidade_carga);
+        mostrar_membros_tripulacao_p_arq(inicio, fp);
+        fprintf(fp, "</TD> <TD> %i </TD> </TR>\n", inicio->Aeronave_alocada);
+        
         inicio = inicio->Proximo;
     }
 

@@ -5,6 +5,7 @@
 #include "../include/Arquivos.h"
 #include "../include/Auxiliar.h"
 #include <stdio.h>
+#include <string.h>
 
 void gerenciamento_aeronave(int opcao, lista_naves_t *frota_nave)
 {
@@ -136,6 +137,7 @@ void gerenciamento_rotas(int opcao, lista_rotas_t *lista_rota, aeronave_t *prime
 
 void gerenciamento_saida(int opcao, aeronave_t *inicio_nave, rotas_t *inicio_rota)
 {
+        string_20 aux;
 
     switch (opcao){
         case 1: 
@@ -143,12 +145,41 @@ void gerenciamento_saida(int opcao, aeronave_t *inicio_nave, rotas_t *inicio_rot
         case 2: salvar_dados_naves(inicio_nave);
                 salvar_dados_rotas(inicio_rota);
                 break;
-        case 3: 
+
+        case 3: printf("Digite o nome do arquivo que deseja salvar...:");
+                leitura_string(aux, SIZE_STR_2);
+                strcat(aux, ".txt");
+                salvar_dados_naves_arq_texto(inicio_nave, aux);
                 break;
-        case 4: 
-                break;
-        case 5: 
+                
+        case 4: printf("Digite o nome do arquivo que deseja salvar...:");
+                leitura_string(aux, SIZE_STR_2);
+                strcat(aux, ".txt");
+                salvar_dados_rotas_arq_texto(inicio_rota, aux);
                 break;
 
-}
+        case 5: printf("Digite o nome do arquivo que deseja salvar...:");
+                leitura_string(aux, SIZE_STR_2);
+                strcat(aux, ".csv");
+                salvar_dados_naves_arq_csv(inicio_nave, aux);
+                break;
+
+        case 6: printf("Digite o nome do arquivo que deseja salvar...:");
+                leitura_string(aux, SIZE_STR_2);
+                strcat(aux, ".csv");
+                salvar_dados_rotas_arq_csv(inicio_rota, aux);
+                break;
+
+        case 7: printf("Digite o nome do arquivo que deseja salvar...:");
+                leitura_string(aux, SIZE_STR_2);
+                strcat(aux, ".html");
+                salvar_dados_naves_arq_html(inicio_nave, aux);
+                break;
+
+        case 8: printf("Digite o nome do arquivo que deseja salvar...:");
+                leitura_string(aux, SIZE_STR_2);
+                strcat(aux, ".html");
+                salvar_dados_rotas_arq_html(inicio_rota, aux);
+                break;
+        }       
 }

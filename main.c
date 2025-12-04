@@ -32,10 +32,9 @@ int main ()
             case 2: gerenciamento_rotas(sub_menu_rotas(), &Lista_rotas, Frota_aeronaves.Primeiro);
                     break;
 
-            case 0: gerenciamento_saida(sub_menu_saida(), Frota_aeronaves.Primeiro, Lista_rotas.Primeiro);
+            case 3: gerenciamento_saida(sub_menu_saida(), Frota_aeronaves.Primeiro, Lista_rotas.Primeiro);
                     printf("Tenha um bom dia.\n");
                     break;
-
         }
     } while(opcao != 0);
 

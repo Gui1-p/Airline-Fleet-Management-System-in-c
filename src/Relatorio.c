@@ -54,7 +54,7 @@ void mostrar_membros_tripulacao(const rotas_t *rota, FILE *fp_arq)
 {
     printf("Os membros da tripulação são:\n");
     for(int i = 0; i < rota->Total_membros; i++){
-        fprintf(fp_arq ,"->%s\n", *(rota.Membros_tripulacao + i));
+        fprintf(fp_arq ,"->%s\n", rota->Membros_tripulacao[i]);
     }
 }
 

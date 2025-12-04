@@ -26,3 +26,30 @@ Este projeto/trabalho é um sistema de gerenciamento de frota aérea para uma no
   - Mostar rota com maior número de passageiros;
   - Mostar rota com menor número de passageiros;
   - Quantidade de vezes que uma determinada aeronave entrou em manutenção.
+
+
+## 🚀 Como Compilar e Executar
+
+Este projeto possui um `Makefile` configurado para facilitar a compilação.
+
+### Pré-requisitos
+* Compilador GCC instalado
+* Sistema operacional Linux (ou WSL no Windows)
+
+
+## 🛠️ Tecnologias e Conceitos Utilizados
+
+* **Linguagem C:** Padrão C99.
+* **Modularização:** Separação clara entre interface (`.h`) e implementação (`.c`).
+* **Makefiles:** Automação de compilação.
+* **Estruturas de Dados:** Uso intensivo de `structs` e `typedefs` para modelagem de dados.
+* **Gerenciamento de Memória:** Alocação dinâmica (Listas Encadeadas) para gerenciamento eficiente da frota.
+* **Persistência de Dados:** Manipulação de arquivos binários e texto para salvar/carregar dados.
+
+
+  ## 📂 Estrutura do Projeto
+
+* `src/`: Contém o código-fonte (`.c`) das implementações.
+* `include/`: Contém os cabeçalhos (`.h`) e definições de tipos.
+* `objs/`: Diretório para os arquivos objeto compilados.
+* `Makefile`: Script de compilação automatizada.
